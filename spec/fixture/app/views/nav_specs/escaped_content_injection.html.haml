@@ -1,0 +1,6 @@
+:ruby
+  Showcase::Common::Nav.setup(:test) do |nav|
+    nav.add(:injection, 'Has %s injection').url('/')
+  end
+
+= display_navigation(:test, nil, :inject => { :injection => '&' })

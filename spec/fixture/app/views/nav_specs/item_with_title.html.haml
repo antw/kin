@@ -1,0 +1,8 @@
+:ruby
+  Showcase::Common::Nav.setup(:test) do |nav|
+    # Items with titles.
+    nav.add(:title, 'Has title').title('My item title')
+    nav.add(:inject_title, 'Item with %s').title('My item title')
+  end
+
+= display_navigation(:test, nil, :inject => { :inject_title => ['content'] })

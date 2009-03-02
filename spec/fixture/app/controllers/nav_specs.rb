@@ -1,0 +1,2 @@
+class NavSpecs < SpecController
+end

@@ -1,0 +1,7 @@
+:ruby
+  Showcase::Common::Nav.setup(:test) do |nav|
+    # Item with a URL generated at runtime.
+    nav.add(:resource, 'Show resource').resource(:edit)
+  end
+
+= display_navigation(:test, nil, :resource => FakeModel.new)

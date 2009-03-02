@@ -1,0 +1,11 @@
+:ruby
+  Showcase::Common::Nav.setup(:test) do |nav|
+    nav.add(:home, 'Home').url('/myurl')
+
+    # Items with guard conditions.
+    nav.add(:guard_one, 'Guard One').guard(:one)
+    nav.add(:guard_two, 'Guard Two').guard(:one)
+    nav.add(:guard_three, 'Guard Three').guard(:three)
+
+    nav.add(:not_guarded, 'Not guarded')
+  end

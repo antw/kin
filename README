@@ -5,9 +5,10 @@ Showcase::Common contains a number of components extracted from Showcase which
 are suitable for reuse in other applications. At the moment, included in this
 Gem are:
 
-  Showcase::Common::Menu
-    Allows for easily building tabbed menus, selecting active tabs, linking to
-    resources, and guarding tabs from those without sufficient permission.
+  Showcase::Common::Nav
+    Allows for easily building tabbed nevigation, selecting active tabs,
+    linking to resources, and guarding tabs from those without sufficient
+    permission.
 
   Showcase::Common::Masthead
     Creates the mastheads used in Showcase which contains the page title, and
