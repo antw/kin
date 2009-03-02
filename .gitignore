@@ -11,3 +11,4 @@ gems/gems/*
 gems/specifications/*
 merb_profile_results
 public/stylesheets/*.css
+spec/merb_test.log
