@@ -30,10 +30,16 @@ end
 # rSpec & rcov
 ##############################################################################
 
-desc "Run all examples"
+desc "Run all examples (or a specific spec with TASK=xxxx)"
 Spec::Rake::SpecTask.new('spec') do |t|
-  t.spec_files = FileList['spec/**/*.rb']
-  t.spec_opts = ['-c -f s']
+  t.spec_opts  = ["-c -f -s"]
+  t.spec_files = begin
+    if ENV["TASK"]
+      ENV["TASK"].split(',').map { |task| "spec/**/#{task}_spec.rb" }
+    else
+      FileList['spec/**/*_spec.rb']
+    end
+  end
 end
 
 desc "Run all examples with RCov"
