@@ -1,0 +1,13 @@
+.DS_Store
+TAGS
+*~
+.#*
+.hgignore
+.hg/*
+.svn/*
+coverage/*
+pkg/*
+gems/gems/*
+gems/specifications/*
+merb_profile_results
+public/stylesheets/*.css
