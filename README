@@ -5,6 +5,12 @@ Showcase::Common contains a number of components extracted from Showcase which
 are suitable for reuse in other applications. At the moment, included in this
 Gem are:
 
+  Showcase::Common::Form
+    A custom form builder which extends Merb's default. Adds support for
+    date_field, time_field and datetime_field. Also included is a tweaked
+    label which will add span.req around asterisks, and span.note around text
+    which is in parenthesis.
+
   Showcase::Common::Nav
     Allows for easily building tabbed nevigation, selecting active tabs,
     linking to resources, and guarding tabs from those without sufficient
