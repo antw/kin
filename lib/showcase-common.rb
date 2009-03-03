@@ -1,3 +1,6 @@
+require 'merb-helpers'
+
+require 'showcase-common/form_builder'
 require 'showcase-common/masthead'
 require 'showcase-common/nav'
 

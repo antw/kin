@@ -1,0 +1,5 @@
+- model = FakeModel.new
+- model.publish_on = Time.utc(2009, "Feb", 28, 01, 50)
+
+= form_for(model) do
+  = datetime_field(:publish_on)

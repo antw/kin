@@ -1,5 +1,5 @@
 class FakeModel
-  attr_accessor :foo, :bad
+  attr_accessor :foo, :publish_on, :bad
 
   def id
     1337
