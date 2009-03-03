@@ -206,15 +206,15 @@ describe Showcase::Common::Form::Builder do
       rendered = @c.render(:bound_datetime_field)
 
       rendered.should have_selector(
-        'input[name="fake_model_publish_on[day]"]')
+        'input[name="fake_model[publish_on][day]"]')
       rendered.should have_selector(
-        'input[name="fake_model_publish_on[month]"]')
+        'input[name="fake_model[publish_on][month]"]')
       rendered.should have_selector(
-        'input[name="fake_model_publish_on[year]"]')
+        'input[name="fake_model[publish_on][year]"]')
       rendered.should have_selector(
-        'input[name="fake_model_publish_on[hour]"]')
+        'input[name="fake_model[publish_on][hour]"]')
       rendered.should have_selector(
-        'input[name="fake_model_publish_on[minute]"]')
+        'input[name="fake_model[publish_on][minute]"]')
     end
 
     it 'should set no values for any field when the object attribute is nil' do

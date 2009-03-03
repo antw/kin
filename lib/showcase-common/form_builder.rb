@@ -27,7 +27,8 @@ module Showcase
         #
         def bound_date_field(method, attrs = {})
           update_bound_controls(method, attrs, 'date')
-          attrs[:value] = @obj.send(method)
+          attrs[:value]   = @obj.send(method)
+          attrs[:name]  ||= control_name(method)
           unbound_date_field(attrs)
         end
 
@@ -48,7 +49,8 @@ module Showcase
         #
         def bound_time_field(method, attrs = {})
           update_bound_controls(method, attrs, 'time')
-          attrs[:value] = @obj.send(method)
+          attrs[:value]   = @obj.send(method)
+          attrs[:name]  ||= control_name(method)
           unbound_time_field(attrs)
         end
 
@@ -69,7 +71,8 @@ module Showcase
         #
         def bound_datetime_field(method, attrs = {})
           update_bound_controls(method, attrs, 'datetime')
-          attrs[:value] = @obj.send(method)
+          attrs[:value]   = @obj.send(method)
+          attrs[:name]  ||= control_name(method)
           unbound_datetime_field(attrs)
         end
 
@@ -155,12 +158,10 @@ module Showcase
             end
           end
 
-          name = attrs[:id] || attrs[:name]
-
           datetime_options.reduce({}) do |h, (suffix, defaults)|
             h[suffix] = defaults.merge(attrs).merge(
-              :id    => '%s_%s'  % [name, suffix],
-              :name  => '%s[%s]' % [name, suffix],
+              :id    => '%s_%s'  % [attrs[:id] || attrs[:name], suffix],
+              :name  => '%s[%s]' % [attrs[:name] || attrs[:id], suffix],
               :value => values && values[suffix]
             ) ; h
           end
