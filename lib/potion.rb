@@ -13,8 +13,8 @@ if defined?(Merb::Plugins)
     :nav_formatter => Potion::Nav::BasicFormatter
   }
 
-  if defined?(Sass::Plugin)
-    Merb::BootLoader.after_app_loads do
+  Merb::BootLoader.after_app_loads do
+    if defined?(Sass)
       template_location = Merb::Plugins.config[:sass][:template_location] ||
         Merb.dir_for(:stylesheet) / "sass"
 
