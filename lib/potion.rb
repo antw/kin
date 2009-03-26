@@ -18,8 +18,8 @@ if defined?(Merb::Plugins)
       Merb.dir_for(:stylesheet) / "sass"
 
     # Add SASS stylesheets to the load_path.
-    Merb::Plugins.config[:sass][:load_paths] ||= [template_location]
-    Merb::Plugins.config[:sass][:load_paths] <<
+    Sass::Plugin.options[:load_paths] ||= [template_location]
+    Sass::Plugin.options[:load_paths] <<
       File.join(File.dirname(__FILE__), 'potion', 'stylesheets')
   end
 
