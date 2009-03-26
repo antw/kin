@@ -1,3 +1,3 @@
 class FormBuilderSpecs < SpecController
-  self._default_builder = Showcase::Common::Form::Builder
+  self._default_builder = Potion::Form::Builder
 end

@@ -1,11 +1,11 @@
 require File.join( File.dirname(__FILE__), "spec_helper" )
 
-# Nav =======================================================================
+# Nav ========================================================================
 
-describe Showcase::Common::Nav do
+describe Potion::Nav do
   
   after(:each) do
-    Showcase::Common::Nav.reset!
+    Potion::Nav.reset!
   end
 
   # ----------
@@ -13,11 +13,11 @@ describe Showcase::Common::Nav do
 
   describe '#initialize' do
     it 'should set the Nav name to the one supplied' do
-      Showcase::Common::Nav::Menu.new(:test).name.should == :test
+      Potion::Nav::Menu.new(:test).name.should == :test
     end
 
     it 'should typecast the name to a symbol' do
-      Showcase::Common::Nav::Menu.new('test').name.should == :test
+      Potion::Nav::Menu.new('test').name.should == :test
     end
   end
 
@@ -26,7 +26,7 @@ describe Showcase::Common::Nav do
 
   describe '#setup' do
     it 'should yield something which can build a menu' do
-      Showcase::Common::Nav.setup(:test) do |m|
+      Potion::Nav.setup(:test) do |m|
         m.respond_to?(:add).should be_true
         m.add(:nav, 'Text').respond_to?(:title).should be_true
         m.add(:nav, 'Text').respond_to?(:url).should be_true
@@ -36,15 +36,15 @@ describe Showcase::Common::Nav do
     end
 
     it 'should freeze the returned Nav and items' do
-      Showcase::Common::Nav.setup(:test).should be_frozen
-      Showcase::Common::Nav.setup(:test).items.should be_frozen
+      Potion::Nav.setup(:test).should be_frozen
+      Potion::Nav.setup(:test).items.should be_frozen
     end
 
     it 'should register the nav' do
-      Showcase::Common::Nav.get(:test).should be_nil
-      Showcase::Common::Nav.setup(:test)
-      Showcase::Common::Nav.get(:test).should be_kind_of(
-        Showcase::Common::Nav::Menu)
+      Potion::Nav.get(:test).should be_nil
+      Potion::Nav.setup(:test)
+      Potion::Nav.get(:test).should be_kind_of(
+        Potion::Nav::Menu)
     end
   end
 
@@ -53,7 +53,7 @@ describe Showcase::Common::Nav do
 
   describe '(integration)' do
     before(:all) do
-      @nav = Showcase::Common::Nav.setup(:test) do |nav|
+      @nav = Potion::Nav.setup(:test) do |nav|
         nav.add(:home, 'Home')
         nav.add(:second, 'Second item')
         nav.add(:another, 'Another item')
@@ -176,7 +176,7 @@ describe Showcase::Common::Nav do
       it 'should raise a MissingResource if no resource is given' do
         lambda do
           @c.render(:resource_url_without_resource)
-        end.should raise_error(Showcase::Common::Nav::MissingResource)
+        end.should raise_error(Potion::Nav::MissingResource)
       end
     end
 

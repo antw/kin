@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'spec_helper.rb')
 
-describe Showcase::Common::Form::Builder do
+describe Potion::Form::Builder do
 
   before(:each) do
     @c = FormBuilderSpecs.new(Merb::Request.new({}))

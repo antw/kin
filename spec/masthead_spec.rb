@@ -18,9 +18,9 @@ describe 'masthead builder setter', :shared => true do
   end
 end
 
-describe Showcase::Common::Masthead::Builder do
+describe Potion::Masthead::Builder do
   before(:each) do
-    @builder = Showcase::Common::Masthead::Builder.new
+    @builder = Potion::Masthead::Builder.new
   end
 
   # -------
@@ -129,7 +129,7 @@ end
 # Masthead::Helper Specs =====================================================
 
 describe 'Masthead helper mixin' do
-  include Showcase::Common::Masthead::Helper
+  include Potion::Masthead::Helper
 
   describe '#masthead' do
     it 'should pass along the :no_border option' do
