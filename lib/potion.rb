@@ -15,3 +15,12 @@ if defined?(Merb::Plugins)
 
   # Merb::Plugins.add_rakefiles "potion/merbtasks"
 end
+
+##
+# Alias Enumerable#inject as Enumerable#reduce on Ruby 1.8.6.
+#
+if RUBY_VERSION <= '1.8.6' && (! Enumerable.method_defined?(:reduce))
+  module Enumerable
+    alias_method :reduce, :inject
+  end
+end

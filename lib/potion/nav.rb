@@ -17,7 +17,9 @@ module Potion
     #
     def self.setup(name = :default, &blk)
       nav = Builder.new(name).build(&blk)
-      [nav, [nav.items], nav.items].flatten(1).each { |i| i.freeze }
+      nav.freeze
+      nav.items.freeze
+      nav.items.each { |i| i.freeze }
       register(nav)
       nav
     end
