@@ -1,0 +1,212 @@
+// Expects your own stylsheets to define:
+//    !width      - width of the content area.
+//    !link_color - colour of your hyperlinks.
+
+// Buttons
+!btn_link_line_height  ||= 18px
+!btn_line_height       ||= !btn_link_line_height
+!btn_link_padding      ||= 3px 11px 3px 12px
+!btn_ie6_padding       ||= 2px 11px 1px 12px
+!btn_ie7_padding       ||= 2px 11px 1px 12px
+!btn_fx_padding        ||= 3px 11px 3px 12px
+
+// Tiny Buttons
+!btn_tiny_line_height  ||= 15px
+!btn_tiny_link_padding ||= 3px 8px 2px 9px
+!btn_tiny_ie6_padding  ||= 2px 8px 0px 9px
+!btn_tiny_ie7_padding  ||= 2px 8px 1px 9px
+!btn_tiny_fx_padding   ||= 3px 8px 2px 9px
+
+!btn_font ||= "\"Lucida Grande\", Arial, sans-serif"
+
+form
+  label, span.pseudo_label
+    :cursor pointer
+    :display block
+    :font-weight bold
+    :line-height 1
+    :padding 0 0 8px
+    span.req
+      :color #c00
+    span.note
+      +quiet
+      +ismall
+      :font-weight normal
+      :padding-left 5px
+  span.pseudo_label
+    :cursor default
+  ul.form
+    :list-style none
+    :margin 0
+    li
+      :padding-bottom 20px
+  .description
+    +small
+    +quiet
+    :display block
+    :font-weight normal
+    :margin 0
+    :padding 5px 0 0
+  .multiple span.field
+    :display block
+    :float left
+    :padding-right 6px
+
+  // Fields.
+
+  input.text, input.password, input.title, textarea
+    :background #fff url(../images/form_field.png) top left repeat-x
+    :border = !border
+    :border-bottom-color #ddd
+    :border-top-color #999
+    :font-size 1em
+    :line-height 1em
+    :padding 6px 4px 3px
+    &:focus
+      :border-color #999
+      :border-bottom-color #aaa
+      :border-top-color #666
+      // :background-color #fffff0
+      // Safari focus.
+      :outline 0
+    &[disabled=disabled]
+      :background-color #f9f9f9
+  input.title
+    :font-size = (15.0 / 12.0) + "em"
+  input.wide, input.title, textarea
+    :width = !width - 10px
+    &.error
+      :background-color #fef3f3
+  textarea
+    :height 6em
+    :line-height 1.5
+    :margin 0
+
+  // Radios.
+
+  .radios
+    label
+      :float left
+      :font-weight normal
+      :padding 3px 0 8px 5px
+      :width 628px
+    input
+      :float left
+      :margin 2px
+
+  // Date fields.
+
+  li.date
+    .at, .timesep
+      +quiet
+      :padding-top 4px
+    .hour, .timesep
+      :padding-right 2px
+    .datepicker a
+      +ismall
+      :background url(../images/icons/datepicker.png) 6px 4px no-repeat
+      :display block
+      :padding 3px 5px 4px 26px
+    .datepicker.disabled a
+      +quiet
+      :background-position 6px -26px
+      &:hover
+        :cursor default
+        :text-decoration none
+
+// Buttons.
+form ul.form li.buttons
+  :padding-bottom 0
+
+.buttons
+  :margin 0
+  :padding-bottom 0
+  button, a
+    :background #ecf4f6 url(../images/button.png) repeat-x
+    :-moz-border-radius 3px
+    :-webkit-border-radius 3px
+    :border-radius 3px
+    :border 1px solid #999
+    :color #222
+    :cursor pointer
+    :display block
+    :float left
+    :font-family = !btn_font
+    :font-size 1em
+    :line-height = !btn_link_line_height
+    :margin 0 8px 0 0
+    // Links.
+    :padding = !btn_link_padding
+    :text-decoration none
+    &.right
+      :float right
+      :margin 0 0 0 8px
+    &:active
+      :background-position 0 -40px
+    &:focus
+      :border-color #444
+      // Safari
+      :outline none
+    &.blue
+      :background-position 0 -80px
+      :border-color #2c5b8c
+      :color #fff
+      :text-shadow 0 -1px 0px #2c5b8c
+      &:active
+        :background-position 0 -120px
+    .icon
+      :background-position = 2px (!btn_line_height - 16px)
+      :background-repeat no-repeat
+      :padding 2px 2px 2px 26px
+  button
+    :overflow visible
+    // IE6.
+    :padding = !btn_ie6_padding
+    :width auto
+    &[class]
+      // Firefox.
+      :padding = !btn_fx_padding
+      // Webkit
+      :line-height = !btn_line_height
+    *:first-child+html &
+      // IE7.
+      :padding = !btn_ie7_padding
+  &.tiny
+    a, button
+      +itiny
+      :line-height = !btn_tiny_line_height
+      :margin-right 6px
+      :padding = !btn_tiny_link_padding
+    button
+      // IE6.
+      :padding = !btn_tiny_ie6_padding
+      &[class]
+        // Firefox.
+        :padding = !btn_tiny_fx_padding
+        *:first-child+html &
+          // IE7.
+          :padding = !btn_tiny_ie7_padding
+  &, &.tiny
+    button
+      &[disabled=disabled]
+        :cursor default
+        :opacity 0.5
+        :text-shadow none
+        &:active
+          :background-position 0 0
+        &.blue
+          &:active
+            :background-position 0 -80px
+      &.faux_link
+        :background none
+        :border-color transparent
+        :-moz-box-shadow none
+        :-webkit-box-shadow none
+        :box-shadow none
+        :color = !link_color
+        :font-weight normal
+        :padding-left 0
+        :padding-right 0
+        :text-shadow none
+        &:hover
+          :text-decoration underline
