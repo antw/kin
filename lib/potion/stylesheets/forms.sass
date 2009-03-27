@@ -210,3 +210,38 @@ form ul.form li.buttons
         :text-shadow none
         &:hover
           :text-decoration underline
+
+// Error messages
+// ---------------------------------------------------------------------------
+
+div.wide_notice, #gordon div.notice, div.error
+  :background #ecfaff url(../images/icons/information.png) 25px 8px no-repeat
+  :border-top 1px solid #d0e4ec
+  :border-bottom 1px solid #d0e4ec
+  :padding 10px 25px 10px 47px
+  :line-height 1
+  :margin 0 -25px 25px
+  .main
+    :display block
+    :font-weight bold
+  .note
+    +small
+    :color #626d74
+    :display block
+    :margin 6px 0 0
+
+#gordon
+  div.notice
+    :background-color #f5fff0
+    :background-image url(../images/icons/tick.png)
+    :border-color #d7ecd2
+  div.error
+    :background-color #fff0f0
+    :background-image url(../images/icons/cross.png)
+    :border-color #ecd2d2
+
+div.error
+  :background #fffde9 url(/images/icons/exclamation.png) 25px 10px no-repeat
+  :border-color #e3e0c4
+  ul
+    :margin 0
