@@ -19,6 +19,8 @@
 
 !btn_font ||= "\"Lucida Grande\", Arial, sans-serif"
 
+!quiet ||= #777
+
 form
   label, span.pseudo_label
     :cursor pointer
@@ -61,7 +63,7 @@ form
     :border-top-color #999
     :font-size 1em
     :line-height 1em
-    :padding 6px 4px 3px
+    :padding 5px 4px
     &:focus
       :border-color #999
       :border-bottom-color #aaa
@@ -71,8 +73,8 @@ form
       :outline 0
     &[disabled=disabled]
       :background-color #f9f9f9
-  input.title
-    :font-size = (15.0 / 12.0) + "em"
+  .title input, .title .overTxtDiv
+    :font-size 1.25em
   input.wide, input.title, textarea
     :width = !width - 10px
     &.error
@@ -81,6 +83,9 @@ form
     :height 6em
     :line-height 1.5
     :margin 0
+  .overTxtDiv
+    +quiet
+    :padding 4px 0 0 2px
 
   // Radios.
 
