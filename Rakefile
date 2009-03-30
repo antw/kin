@@ -19,7 +19,7 @@ begin
     s.extra_rdoc_files = ['README', 'LICENSE']
 
     s.files = %w(LICENSE README Rakefile VERSION.yml) +
-              Dir.glob("{lib,spec}/**/*")
+              Dir.glob("{lib,spec}/**/*") - %w(spec/merb_test.log)
   end
 rescue LoadError
   puts 'Jeweler not available. Install it with: sudo gem install ' +
