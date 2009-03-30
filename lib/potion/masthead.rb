@@ -21,50 +21,56 @@ module Potion
     #
     class Builder
       attr_accessor :no_border
+      attr_reader   :options
 
       def initialize
         @title, @right_title = nil, nil
         @subtitle, @right_subtitle = nil, nil
+        @options = {}
       end
 
       ##
       # Returns the current title. If you supply a non-nil argument, the title
       # will be set to whatever is provided.
       #
-      # @param  [String] _title The new title.
-      # @return [String]        The masthead title.
+      # @param  [String] value   The new title.
+      # @param  [Hash]   options A hash containing extraoptions.
+      # @return [String]         The masthead title.
       #
-      def title(value = nil)
+      def title(value = nil, options = nil)
       end
 
       ##
       # Returns the current right title. If you supply a non-nil argument, the
       # right title will be set to whatever is provided.
       #
-      # @param  [String] value The new right title.
-      # @return [String]       The masthead right title.
+      # @param  [String] value   The new right title.
+      # @param  [Hash]   options A hash containing extraoptions.
+      # @return [String]         The masthead right title.
       #
-      def right_title(value = nil)
+      def right_title(value = nil, options = nil)
       end
 
       ##
       # Returns the current subtitle. If you supply a non-nil argument, the
       # subtitle will be set to whatever is provided.
       #
-      # @param  [String] value The new subtitle.
-      # @return [String]       The masthead subtitle.
+      # @param  [String] value   The new subtitle.
+      # @param  [Hash]   options A hash containing extraoptions.
+      # @return [String]         The masthead subtitle.
       #
-      def subtitle(value = nil)
+      def subtitle(value = nil, options = nil)
       end
 
       ##
       # Returns the current right subtitle title. If you supply a non-nil
       # argument, the subtitle will be set to whatever is provided.
       #
-      # @param  [String] value The new right subtitle.
-      # @return [String]       The masthead right subtitle.
+      # @param  [String] value   The new right subtitle.
+      # @param  [Hash]   options A hash containing extraoptions.
+      # @return [String]         The masthead right subtitle.
       #
-      def right_subtitle(value = nil)
+      def right_subtitle(value = nil, options = nil)
       end
 
       %w( title right_title subtitle right_subtitle ).each do |meth|
@@ -76,24 +82,12 @@ module Potion
         # end
         #
         class_eval <<-RUBY, __FILE__, __LINE__ + 1
-          def #{meth}(value = nil)
+          def #{meth}(value = nil, options = nil)
             @#{meth} = Merb::Parse.escape_xml(value.to_s) if value
+            @options[:#{meth}] = options
             @#{meth}
           end
         RUBY
-      end
-
-      ##
-      # Returns whether this masthead builder has an "extras".
-      #
-      # Extras are defined as being a right-hand title or right-hand subtitle.
-      # Generally, if the builder has no extras, the .extras div will not be
-      # rendered by #to_html
-      #
-      # @return [TrueClass|FalseClass]
-      #
-      def has_extras?
-        not @right_title.nil? or not @right_subtitle.nil?
       end
 
       ##
@@ -101,13 +95,13 @@ module Potion
       # @return [String] The masthead with all the various titles.
       #
       def to_html
-        formatted_title = '<h1>%s</h1>' % title
-        formatted_subtitle = '<span class="subtitle">%s</span>' % subtitle
+        formatted_title = '<h1>%s</h1>' % formatted(:title)
+        formatted_subtitle = '<span class="subtitle">%s</span>' % formatted(:subtitle)
 
         extras = if has_extras?
           '<div class="extra">%s %s</div>' % [
-            '<span class="main">%s</span>' % (right_title || '&nbsp;'),
-            '<span class="subtitle">%s</span>' % right_subtitle
+            '<span class="main">%s</span>' % (formatted(:right_title) || '&nbsp;'),
+            '<span class="subtitle">%s</span>' % formatted(:right_subtitle)
           ]
         end
 
@@ -129,6 +123,38 @@ module Potion
       def build
         yield self
         self
+      end
+
+      #######
+      private
+      #######
+
+      ##
+      # Returns whether this masthead builder has an "extras".
+      #
+      # Extras are defined as being a right-hand title or right-hand subtitle.
+      # Generally, if the builder has no extras, the .extras div will not be
+      # rendered by #to_html
+      #
+      # @return [TrueClass|FalseClass]
+      #
+      def has_extras?
+        not @right_title.nil? or not @right_subtitle.nil?
+      end
+
+      ##
+      # Returns formatted text for a given field. Wraps the text in a link if
+      # one is required, otherwise the text is returned on it's own.
+      #
+      def formatted(field)
+        value = instance_variable_get(:"@#{field}")
+        url   = @options[field] && options[field][:link]
+
+        if value && url
+          '<a href="%s" title="%s">%s</a>' % [url, value, value]
+        else
+          value
+        end
       end
     end
 

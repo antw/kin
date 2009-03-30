@@ -16,6 +16,11 @@ describe 'masthead builder setter', :shared => true do
     @builder.send(@method).should == 'my_value'
     @builder.send(@method, nil).should == 'my_value'
   end
+
+  it 'should set the extra options' do
+    @builder.send(@method, 'my_value', { :link => '/' })
+    @builder.options[@method].should == { :link => '/' }
+  end
 end
 
 describe Potion::Masthead::Builder do
@@ -93,7 +98,7 @@ describe Potion::Masthead::Builder do
       @c.render(:all).should have_selector(
         '.extra .subtitle:contains("Right subtitle")')
     end
-    
+
     it 'should render an empty right title when no right title is set, but ' +
        'a right subtitle is set' do
       @c.render(:right_subtitle).should have_selector('.extra .main')
@@ -121,6 +126,16 @@ describe Potion::Masthead::Builder do
 
     it 'should have a "no_border" class when no_border = true' do
       @c.render(:no_border).should have_selector('.no_border')
+    end
+
+    # Links.
+
+    it 'should add links to fields when a :link option was present' do
+      links = @c.render(:with_links)
+      links.should have_selector('h1 a[href="/title"]')
+      links.should have_selector('.subtitle a[href="/subtitle"]')
+      links.should have_selector('.main a[href="/right_title"]')
+      links.should have_selector('.subtitle a[href="/right_subtitle"]')
     end
   end
 
