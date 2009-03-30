@@ -110,12 +110,26 @@ describe Potion::Masthead::Builder do
       @c.render(:no_extras).should_not have_selector('.extra')
     end
 
-    it 'should include en "extra" div if a right title is set' do
+    it 'should include an "extra" div if a right title is set' do
       @c.render(:right_title).should have_selector('.extra')
     end
 
     it 'should include an "extra" div if a right subtitle is set' do
       @c.render(:right_subtitle).should have_selector('.extra')
+    end
+
+    # Subtitles.
+
+    it 'should not include subtitles when no subtitles are set' do
+      @c.render(:no_subtitles).should_not have_selector('.subtitle')
+    end
+
+    it 'should include a subtitle if a subtitle is set' do
+      @c.render(:subtitle).should have_selector('.subtitle')
+    end
+
+    it 'should include a right subtitle if a right subtitle is set' do
+      @c.render(:right_subtitle).should have_selector('.extra .subtitle')
     end
 
     # Border.

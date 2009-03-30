@@ -1,8 +1,8 @@
 require 'merb-helpers'
 
-require 'potion/form_builder'
-require 'potion/masthead'
-require 'potion/nav'
+%w( form_builder masthead nav ).each do |file|
+  require File.join(File.dirname(__FILE__), 'potion', file)
+end
 
 # make sure we're running inside Merb
 if defined?(Merb::Plugins)

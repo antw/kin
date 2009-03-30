@@ -84,7 +84,7 @@ module Potion
         class_eval <<-RUBY, __FILE__, __LINE__ + 1
           def #{meth}(value = nil, options = nil)
             @#{meth} = Merb::Parse.escape_xml(value.to_s) if value
-            @options[:#{meth}] = options
+            @options[:#{meth}] = options if options
             @#{meth}
           end
         RUBY
@@ -96,12 +96,19 @@ module Potion
       #
       def to_html
         formatted_title = '<h1>%s</h1>' % formatted(:title)
-        formatted_subtitle = '<span class="subtitle">%s</span>' % formatted(:subtitle)
+
+        formatted_subtitle = if @subtitle
+          '<span class="subtitle">%s</span>' % formatted(:subtitle)
+        end
 
         extras = if has_extras?
+          formatted_rsubtitle = if @right_subtitle
+            '<span class="subtitle">%s</span>' % formatted(:right_subtitle)
+          end
+
           '<div class="extra">%s %s</div>' % [
             '<span class="main">%s</span>' % (formatted(:right_title) || '&nbsp;'),
-            '<span class="subtitle">%s</span>' % formatted(:right_subtitle)
+            formatted_rsubtitle
           ]
         end
 
