@@ -227,7 +227,7 @@ module Potion
       # @param [Hash]   options Options to be supplied to the formatter.
       #
       def display_navigation(name, current, options = {})
-        Merb::Plugins.config[:potion][:nav_formatter].new(
+        (options[:formatter] || Merb::Plugins.config[:potion][:nav_formatter]).new(
           Potion::Nav.get(name), current, options
         ).to_html
       end

@@ -3,7 +3,7 @@ require File.join( File.dirname(__FILE__), "spec_helper" )
 # Nav ========================================================================
 
 describe Potion::Nav do
-  
+
   after(:each) do
     Potion::Nav.reset!
   end
@@ -101,6 +101,25 @@ describe Potion::Nav do
       html = @c.render(:generic_nav)
       html.should have_selector('#nav_home a[href="/"]')
       html.should have_selector('#nav_products a[href="/products"]')
+    end
+
+    # -----------------------
+    # with a custom formatter
+
+    describe 'with a custom formatter' do
+      it 'should use the custom formatter' do
+        formatter = mock('Custom formatter')
+        formatter.should_receive(:to_html)
+
+        ::CustomFormatter = mock('Custom formatter class')
+        ::CustomFormatter.should_receive(:new).and_return(formatter)
+
+        begin
+          @c.render(:with_custom_formatter)
+        ensure
+          Object.send(:remove_const, :CustomFormatter)
+        end
+      end
     end
 
     # ------
