@@ -194,22 +194,31 @@ module Potion
       private
 
       def trasform_item_to_html(item)
+        h = item_hash(item)
+
+        <<-HTML
+          <li id="nav_#{h[:id]}"#{h[:active] ? ' class="active"' : ''}>
+            <a href="#{h[:url]}" title="#{h[:title]}">
+              #{h[:label]}
+            </a>
+          </li>
+        HTML
+      end
+
+      def item_hash(item)
         parsed_label = unless @inject.blank?
           item.label % [@inject[item.id]].flatten.map do |v|
             Merb::Parse.escape_xml(v)
           end
         end
 
-        active = @current == item.id ? ' class="active"' : nil
-        title  = item.title || parsed_label || item.label
-
-        <<-HTML
-          <li id="nav_#{item.id}"#{active}>
-            <a href="#{item.url(@resource)}" title="#{title}">
-              #{parsed_label || item.label}
-            </a>
-          </li>
-        HTML
+        {
+          :id     => item.id,
+          :active => (@current == item.id),
+          :title  => (item.title || parsed_label || item.label),
+          :label  => (parsed_label || item.label),
+          :url    => item.url(@resource)
+        }
       end
     end
 
