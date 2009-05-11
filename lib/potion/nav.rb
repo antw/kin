@@ -196,13 +196,9 @@ module Potion
       def trasform_item_to_html(item)
         h = item_hash(item)
 
-        <<-HTML
-          <li id="nav_#{h[:id]}"#{h[:active] ? ' class="active"' : ''}>
-            <a href="#{h[:url]}" title="#{h[:title]}">
-              #{h[:label]}
-            </a>
-          </li>
-        HTML
+        html_list_item(h) do
+          html_link(h) { h[:label] }
+        end
       end
 
       def item_hash(item)
@@ -219,6 +215,22 @@ module Potion
           :label  => (parsed_label || item.label),
           :url    => item.url(@resource)
         }
+      end
+
+      def html_list_item(h)
+        <<-HTML
+          <li id="nav_#{h[:id]}"#{h[:active] ? ' class="active"' : ''}>
+            #{ yield }
+          </li>
+        HTML
+      end
+
+      def html_link(h)
+        <<-HTML
+          <a href="#{h[:url]}" title="#{h[:title]}">
+            #{ yield }
+          </a>
+        HTML
       end
     end
 
