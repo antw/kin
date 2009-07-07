@@ -7,10 +7,6 @@ describe 'masthead builder setter', :shared => true do
     @builder.send(@method, 'my_value').should == 'my_value'
   end
 
-  it 'should escape the value' do
-    @builder.send(@method, '&').should == '&amp;'
-  end
-
   it 'should not change the attribute value if nil is given' do
     @builder.send(@method, 'my_value')
     @builder.send(@method).should == 'my_value'
@@ -144,12 +140,62 @@ describe Potion::Masthead::Builder do
 
     # Links.
 
-    it 'should add links to fields when a :link option was present' do
+    it 'should add links to fields when a :link option is present' do
       links = @c.render(:with_links)
       links.should have_selector('h1 a[href="/title"]')
       links.should have_selector('.subtitle a[href="/subtitle"]')
       links.should have_selector('.main a[href="/right_title"]')
       links.should have_selector('.subtitle a[href="/right_subtitle"]')
+    end
+
+    # Custom CSS classes.
+
+    it 'should add extra CSS classes to fields when a :class option is present' do
+      css_classes = @c.render(:with_css_classes)
+      css_classes.should have_selector('h1.my_title')
+      css_classes.should have_selector('.subtitle.my_subtitle')
+      css_classes.should have_selector('.main.my_right_title')
+      css_classes.should have_selector('.subtitle.my_right_subtitle')
+    end
+
+    # Escaping
+
+    it 'should escape values by default' do
+      escaped = @c.render(:escaping)
+
+      escaped.should have_selector('h1') do |h1|
+        h1.to_s.should =~ /&amp;/
+      end
+
+      escaped.should have_selector('.details .subtitle') do |subtitle|
+        subtitle.to_s.should =~ /&amp;/
+      end
+
+      escaped.should have_selector('.main') do |right_title|
+        right_title.to_s.should =~ /&amp;/
+      end
+
+      escaped.should have_selector('.extra .subtitle') do |right_subtitle|
+        right_subtitle.to_s.should =~ /&amp;/
+      end
+    end
+
+    # No escaping.
+
+    it 'should not escape fields when a :no_escape option is set' do
+      escape = @c.render(:with_no_escape)
+
+      escape.should have_selector('h1') do |h1|
+        h1.to_s.should =~ /<strong>/
+      end
+
+      escape.should have_selector('.details .subtitle') do |subtitle|
+        subtitle.to_s.should =~ /&lt;strong&gt;/
+      end
+
+      escape.should have_selector('.main') do |right_title|
+        right_title.to_s.should =~ /&lt;strong&gt;/
+      end
     end
   end
 

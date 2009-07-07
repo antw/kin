@@ -20,6 +20,15 @@ module Potion
     # masthead.
     #
     class Builder
+      include Merb::Helpers::Tag
+
+      DEFAULT_CLASSES = {
+        :title          => ''.freeze,
+        :subtitle       => 'subtitle'.freeze,
+        :right_title    => 'main'.freeze,
+        :right_subtitle => 'subtitle'.freeze
+      }.freeze
+
       attr_accessor :no_border
       attr_reader   :options
 
@@ -83,7 +92,7 @@ module Potion
         #
         class_eval <<-RUBY, __FILE__, __LINE__ + 1
           def #{meth}(value = nil, options = nil)
-            @#{meth} = Merb::Parse.escape_xml(value.to_s) if value
+            @#{meth} = value if value
             @options[:#{meth}] = options if options
             @#{meth}
           end
@@ -95,20 +104,16 @@ module Potion
       # @return [String] The masthead with all the various titles.
       #
       def to_html
-        formatted_title = '<h1>%s</h1>' % formatted(:title)
+        formatted_title = formatted(:title, :h1)
 
         formatted_subtitle = if @subtitle
-          '<span class="subtitle">%s</span>' % formatted(:subtitle)
+          formatted(:subtitle)
         end
 
         extras = if has_extras?
-          formatted_rsubtitle = if @right_subtitle
-            '<span class="subtitle">%s</span>' % formatted(:right_subtitle)
-          end
-
           '<div class="extra">%s %s</div>' % [
-            '<span class="main">%s</span>' % (formatted(:right_title) || '&nbsp;'),
-            formatted_rsubtitle
+            formatted(:right_title) || '<span class="main">&nbsp;</span>',
+            @right_subtitle ? formatted(:right_subtitle) : ''
           ]
         end
 
@@ -153,15 +158,31 @@ module Potion
       # Returns formatted text for a given field. Wraps the text in a link if
       # one is required, otherwise the text is returned on it's own.
       #
-      def formatted(field)
-        value = instance_variable_get(:"@#{field}")
-        url   = @options[field] && options[field][:link]
-
-        if value && url
-          '<a href="%s" title="%s">%s</a>' % [url, value, value]
-        else
-          value
+      def formatted(field, wrap_in = :span)
+        unless value = instance_variable_get(:"@#{field}").to_s
+          return nil
         end
+
+        options = @options[field] || {}
+        link    = options.delete(:link)
+
+        # Escape required?
+        unless options.delete(:no_escape)
+          value = Merb::Parse.escape_xml(value.to_s)
+        end
+
+        # Link required?
+        if link
+          value = '<a href="%s" title="%s">%s</a>' % [link, value, value]
+        end
+
+        if options[:class]
+          options[:class] += ' %s' % DEFAULT_CLASSES[field]
+        elsif field != :title
+          options[:class] = DEFAULT_CLASSES[field]
+        end
+
+        tag(wrap_in, value, options)
       end
     end
 
