@@ -1,0 +1,11 @@
+== 0.2.0 2009-08-22
+
+* Renamed gem from Potion to Kin.
+* Added kin.js from Torque project.
+* SASS stylesheets will no longer be added to the SASS load path, rather you
+  should use `rake kin:copy_assets` to copy Kin's SASS and javascripts to your
+  application.
+* Navigation configuration will be autoloaded from navigation.rb in your
+  application's config directory (Merb.dir_for(:config)).
+* Added Kin::Configurable which replaces application-specific #config and
+  #configure methods.

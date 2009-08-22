@@ -16,9 +16,9 @@ begin
     s.author      = 'Anthony Williams'
     s.email       = 'anthony@ninecraft.com'
 
-    s.extra_rdoc_files = ['README', 'LICENSE']
+    s.extra_rdoc_files = ['README', 'CHANGELOG', 'LICENSE']
 
-    s.files = %w(LICENSE README Rakefile VERSION.yml) +
+    s.files = %w(LICENSE README CHANGELOG Rakefile VERSION.yml) +
               Dir.glob("{lib,spec}/**/*") - %w(spec/merb_test.log)
   end
 rescue LoadError
