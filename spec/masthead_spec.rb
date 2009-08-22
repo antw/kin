@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'spec_helper.rb')
+require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
 
 # Masthead::Builder Specs ======================================================
 
@@ -19,9 +19,9 @@ describe 'masthead builder setter', :shared => true do
   end
 end
 
-describe Potion::Masthead::Builder do
+describe Kin::Masthead::Builder do
   before(:each) do
-    @builder = Potion::Masthead::Builder.new
+    @builder = Kin::Masthead::Builder.new
   end
 
   # -------
@@ -206,7 +206,7 @@ end
 # Masthead::Helper Specs =====================================================
 
 describe 'Masthead helper mixin' do
-  include Potion::Masthead::Helper
+  include Kin::Masthead::Helper
 
   describe '#masthead' do
     it 'should pass along the :no_border option' do

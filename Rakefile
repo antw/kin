@@ -7,7 +7,7 @@ require 'merb-core/tasks/merb'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name        = 'potion'
+    s.name        = 'kin'
     s.platform    = Gem::Platform::RUBY
     s.has_rdoc    = false
     s.summary     = 'Components commonly used in Showcase which can be ' +

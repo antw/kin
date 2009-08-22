@@ -1,7 +1,7 @@
 module Merb
   module GlobalHelpers
-    include Potion::Masthead::Helper
-    include Potion::Nav::Helper
-    include Potion::Form::Helper
+    include Kin::Masthead::Helper
+    include Kin::Nav::Helper
+    include Kin::Form::Helper
   end
 end

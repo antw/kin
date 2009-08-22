@@ -2,7 +2,7 @@ $:.push File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'rubygems'
 require 'merb-core'
-require File.join(File.dirname(__FILE__), '..', 'lib', 'potion')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'kin')
 
 use_template_engine :haml
 Merb.disable(:initfile)

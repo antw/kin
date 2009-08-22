@@ -1,4 +1,4 @@
-module Potion
+module Kin
   module Masthead
     ##
     # Most pages on Showcase have a masthead of some sort. The masthead fits
@@ -213,11 +213,11 @@ module Potion
       # Returns the MastheadBuilder instance for the current request.
       #
       # @api private
-      # @return [Potion::MastheadBuilder]
+      # @return [Kin::MastheadBuilder]
       #
       def masthead_builder
-        @_masthead_builder ||= Potion::Masthead::Builder.new
+        @_masthead_builder ||= Kin::Masthead::Builder.new
       end
     end # Helper
   end # Masthead
-end # Potion
+end # Kin

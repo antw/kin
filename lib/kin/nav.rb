@@ -1,4 +1,4 @@
-module Potion
+module Kin
   ##
   # The Nav class is used when creating main navigation navs. Typically this
   # is the "Sets", "Search", "Your Account", etc nav, but is also used for the
@@ -31,7 +31,7 @@ module Potion
     # @param [Symbol] name
     #   The name of the nav to return. If no name is given, the default nav
     #   will be returned.
-    # @return [Potion::Nav]
+    # @return [Kin::Nav]
     #
     def self.get(name = :default)
       @registry ||= {}
@@ -241,18 +241,18 @@ module Potion
       # Displays the navigation identified by name.
       #
       # You can change the formatter used to generate HTML for the menu by
-      # altering Merb::Plugins.config[:potion][:nav_formatter].
+      # altering Merb::Plugins.config[:kin][:nav_formatter].
       #
       # @param [Symbol] name    The name of the menu to be displayed.
       # @param [Symbol] current The ID of the active nav item
       # @param [Hash]   options Options to be supplied to the formatter.
       #
       def display_navigation(name, current, options = {})
-        (options[:formatter] || Merb::Plugins.config[:potion][:nav_formatter]).new(
-          Potion::Nav.get(name), current, options
+        (options[:formatter] || Merb::Plugins.config[:kin][:nav_formatter]).new(
+          Kin::Nav.get(name), current, options
         ).to_html
       end
     end # Helper
 
   end # Nav
-end # Potion
+end # Kin

@@ -1,11 +1,11 @@
-require File.join( File.dirname(__FILE__), "spec_helper" )
+require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
 
 # Nav ========================================================================
 
-describe Potion::Nav do
+describe Kin::Nav do
 
   after(:each) do
-    Potion::Nav.reset!
+    Kin::Nav.reset!
   end
 
   # ----------
@@ -13,11 +13,11 @@ describe Potion::Nav do
 
   describe '#initialize' do
     it 'should set the Nav name to the one supplied' do
-      Potion::Nav::Menu.new(:test).name.should == :test
+      Kin::Nav::Menu.new(:test).name.should == :test
     end
 
     it 'should typecast the name to a symbol' do
-      Potion::Nav::Menu.new('test').name.should == :test
+      Kin::Nav::Menu.new('test').name.should == :test
     end
   end
 
@@ -26,7 +26,7 @@ describe Potion::Nav do
 
   describe '#setup' do
     it 'should yield something which can build a menu' do
-      Potion::Nav.setup(:test) do |m|
+      Kin::Nav.setup(:test) do |m|
         m.respond_to?(:add).should be_true
         m.add(:nav, 'Text').respond_to?(:title).should be_true
         m.add(:nav, 'Text').respond_to?(:url).should be_true
@@ -36,15 +36,14 @@ describe Potion::Nav do
     end
 
     it 'should freeze the returned Nav and items' do
-      Potion::Nav.setup(:test).should be_frozen
-      Potion::Nav.setup(:test).items.should be_frozen
+      Kin::Nav.setup(:test).should be_frozen
+      Kin::Nav.setup(:test).items.should be_frozen
     end
 
     it 'should register the nav' do
-      Potion::Nav.get(:test).should be_nil
-      Potion::Nav.setup(:test)
-      Potion::Nav.get(:test).should be_kind_of(
-        Potion::Nav::Menu)
+      Kin::Nav.get(:test).should be_nil
+      Kin::Nav.setup(:test)
+      Kin::Nav.get(:test).should be_kind_of(Kin::Nav::Menu)
     end
   end
 
@@ -53,7 +52,7 @@ describe Potion::Nav do
 
   describe '(integration)' do
     before(:all) do
-      @nav = Potion::Nav.setup(:test) do |nav|
+      @nav = Kin::Nav.setup(:test) do |nav|
         nav.add(:home, 'Home')
         nav.add(:second, 'Second item')
         nav.add(:another, 'Another item')
@@ -195,7 +194,7 @@ describe Potion::Nav do
       it 'should raise a MissingResource if no resource is given' do
         lambda do
           @c.render(:resource_url_without_resource)
-        end.should raise_error(Potion::Nav::MissingResource)
+        end.should raise_error(Kin::Nav::MissingResource)
       end
     end
 

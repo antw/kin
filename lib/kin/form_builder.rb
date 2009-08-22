@@ -1,4 +1,4 @@
-module Potion
+module Kin
   ##
   # Adds some extra form helpers to the merb-helper defaults.
   #
@@ -212,4 +212,4 @@ module Potion
       end
     end # Helper
   end # Form
-end # Potion
+end # Kin

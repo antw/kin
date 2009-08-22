@@ -16,4 +16,4 @@ Merb::Config.use do |c|
   c[:session_id_key] = '_fixture_session_id' # cookie session id key, defaults to "_session_id"
 end
 
-dependency File.join(File.dirname(__FILE__), '..', '..', '..', 'lib', 'potion')
+dependency File.join(File.dirname(__FILE__), '..', '..', '..', 'lib', 'kin')
