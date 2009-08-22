@@ -5,16 +5,16 @@ module Kin
     # beneath the main navigation and the page content. Typically it contains
     # the page title and some other interesting information.
     #
-    #   +--------+----------+--------------+            +--------------------+
-    #   |  Sets  |  Search  |  My account  |            |  Upload a new set  |
-    #   +--------+----------+--------------+------------+--------------------+
-    #   |  [Title]                                            [Right title]  |
-    #   |  [Subtitle]                                      [Right subtitle]  |
-    #   +  ----------------------------------------------------------------  +
-    #   |                                                                    |
-    #   |  Page contents                                                     |
-    #   |                                                                    |
-    #   +--------------------------------------------------------------------+
+    #   +--------+----------+---------+              +--------------------+
+    #   |  Sets  |  Search  |  Admin  |              |  Upload a new set  |
+    #   +--------+----------+---------+--------------+--------------------+
+    #   |  [Title]                                         [Right title]  |
+    #   |  [Subtitle]                                   [Right subtitle]  |
+    #   +-----------------------------------------------------------------+
+    #   |                                                                 |
+    #   |  Page contents                                                  |
+    #   |                                                                 |
+    #   +-----------------------------------------------------------------+
     #
     # See the #masthead helper for more information on how to build a
     # masthead.
