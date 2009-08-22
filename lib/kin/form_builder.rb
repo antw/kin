@@ -157,7 +157,7 @@ module Kin
           end
         end
 
-        datetime_options.reduce({}) do |h, (suffix, defaults)|
+        datetime_options.inject({}) do |h, (suffix, defaults)|
           h[suffix] = defaults.merge(attrs).merge(
             :id    => '%s_%s'  % [attrs[:id] || attrs[:name], suffix],
             :name  => '%s[%s]' % [attrs[:name] || attrs[:id], suffix],
