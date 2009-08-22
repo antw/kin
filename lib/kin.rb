@@ -4,6 +4,7 @@ require 'merb-helpers'
 if defined?(Merb::Plugins)
   kin = File.expand_path(File.join(File.dirname(__FILE__), 'kin'))
 
+  require File.join(kin, 'configurable')
   require File.join(kin, 'form_builder')
   require File.join(kin, 'masthead')
   require File.join(kin, 'nav')
