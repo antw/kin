@@ -85,8 +85,9 @@ module Potion
       %w( title right_title subtitle right_subtitle ).each do |meth|
         # Example:
         #
-        # def title(value = nil)
-        #   @title = Merb::Parse.escape_xml(value.to_s) if value
+        # def title(value = nil, options = nil)
+        #   @title = value if value
+        #   @options[:title] = options if options
         #   @title
         # end
         #
@@ -105,10 +106,7 @@ module Potion
       #
       def to_html
         formatted_title = formatted(:title, :h1)
-
-        formatted_subtitle = if @subtitle
-          formatted(:subtitle)
-        end
+        formatted_subtitle = formatted(:subtitle) if @subtitle
 
         extras = if has_extras?
           '<div class="extra">%s %s</div>' % [
