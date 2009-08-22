@@ -97,7 +97,9 @@ describe Potion::Masthead::Builder do
 
     it 'should render an empty right title when no right title is set, but ' +
        'a right subtitle is set' do
-      @c.render(:right_subtitle).should have_selector('.extra .main')
+      @c.render(:right_subtitle).should have_selector('.extra .main') do |main|
+        main.to_s.should =~ /&nbsp;/
+      end
     end
 
     # Extras div.

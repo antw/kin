@@ -157,8 +157,10 @@ module Potion
       # one is required, otherwise the text is returned on it's own.
       #
       def formatted(field, wrap_in = :span)
-        unless value = instance_variable_get(:"@#{field}").to_s
+        if instance_variable_get(:"@#{field}").blank?
           return nil
+        else
+          value = instance_variable_get(:"@#{field}").to_s
         end
 
         options = @options[field] || {}
