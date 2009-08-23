@@ -101,9 +101,9 @@ module Kin
     # Represents a single item/tab in a navigation menu.
     #
     class Item
-      attr_reader   :id, :label
-      attr_accessor :resource, :title, :guard
-      attr_writer   :url
+      attr_reader   :id
+      attr_accessor :resource, :guard
+      attr_writer   :url, :title
 
       ##
       # @param [Symbol] id
@@ -126,6 +126,35 @@ module Kin
       #
       def display?(guards = {})
         @guard.nil? || guards[@guard]
+      end
+
+      ##
+      # Returns the item label.
+      #
+      # @param [Array] inject
+      #   An optional array containing (escaped) strings for injection.
+      #
+      # @return [String]
+      #
+      # @api public
+      #
+      def label(inject = nil)
+        inject ? @label % inject : @label
+      end
+
+      ##
+      # Returns the item title (hover tooltip). If no title is set, the label
+      # will be used intead.
+      #
+      # @param [Array] inject
+      #   An optional array containing (escaped) strings for injection.
+      #
+      # @return [String]
+      #
+      # @api public
+      #
+      def title(inject = nil)
+        @title || label(inject)
       end
 
       ##

@@ -28,6 +28,13 @@ module Kin
         @resource = options[:resource]
         @inject   = options.fetch(:inject, {})
         @guards   = options.fetch(:guard, {})
+
+        # Escape injected content.
+        @inject.each do |item_id, contents|
+          contents = Array(contents)
+          contents.map! { |v| Merb::Parse.escape_xml(v) }
+          @inject[item_id] = contents
+        end
       end
 
       ##
@@ -60,54 +67,27 @@ module Kin
       # @api private
       #
       def trasform_item_to_html(item)
-        h = item_hash(item)
-
-        html_list_item(h) do
-          html_link(h) { h[:label] }
+        html_list_item(item, @current == item.id) do
+          html_link(item) { item.label(@inject[item.id]) }
         end
-      end
-
-      ##
-      # Creates a hash representing the item's contents. Escapes any injected
-      # content.
-      #
-      # @param [Kin::Nav::Item] item
-      #   The nav item for which you want a hash.
-      #
-      # @todo Deprecate?
-      #
-      # @api private
-      #
-      def item_hash(item)
-        parsed_label = unless @inject.blank?
-          item.label % [@inject[item.id]].flatten.map do |v|
-            Merb::Parse.escape_xml(v)
-          end
-        end
-
-        {
-          :id     => item.id,
-          :active => (@current == item.id),
-          :title  => (item.title || parsed_label || item.label),
-          :label  => (parsed_label || item.label),
-          :url    => item.url(@resource)
-        }
       end
 
       ##
       # Returns a list element, yielding to allow injection of the <a>
       # element.
       #
-      # @param [Hash] h
-      #   A hash representing the item.
+      # @param [Kin::Nav::Item] item
+      #   The item to be transformed to HTML.
+      # @param [Boolean] is_active
+      #   A flag indicating if this item is the active item.
       #
       # @return [String]
       #
       # @api private
       #
-      def html_list_item(h)
+      def html_list_item(item, is_active)
         <<-HTML
-          <li id="nav_#{h[:id]}"#{h[:active] ? ' class="active"' : ''}>
+          <li id="nav_#{item.id}"#{is_active ? ' class="active"' : ''}>
             #{ yield }
           </li>
         HTML
@@ -116,16 +96,16 @@ module Kin
       ##
       # Returns an anchor element containing a link for the menu item.
       #
-      # @param [Hash] h
-      #   A hash representing the item.
+      # @param [Kin::Nav::Item] item
+      #   The item to be transformed to HTML.
       #
       # @return [String]
       #
       # @api private
       #
-      def html_link(h)
+      def html_link(item)
         <<-HTML
-          <a href="#{h[:url]}" title="#{h[:title]}">
+          <a href="#{item.url(@resource)}" title="#{item.title(@inject[item.id])}">
             #{ yield }
           </a>
         HTML
