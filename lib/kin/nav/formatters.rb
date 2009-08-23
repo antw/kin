@@ -6,9 +6,9 @@ module Kin
     #
     # @see Kin::Nav::Helper#display_navigation
     #
-    # @todo Mix in Merb::Helpers::Tag.
-    #
     class BasicFormatter
+      include Merb::Helpers::Tag
+
       ##
       # Creates a new BasicFormatter instance.
       #
@@ -86,11 +86,10 @@ module Kin
       # @api private
       #
       def html_list_item(item, is_active)
-        <<-HTML
-          <li id="nav_#{item.id}"#{is_active ? ' class="active"' : ''}>
-            #{ yield }
-          </li>
-        HTML
+        tag(:li, yield,
+          :id    => "nav_#{item.id}",
+          :class => is_active ? 'active"' : ''
+        )
       end
 
       ##
@@ -104,11 +103,10 @@ module Kin
       # @api private
       #
       def html_link(item)
-        <<-HTML
-          <a href="#{item.url(@resource)}" title="#{item.title(@inject[item.id])}">
-            #{ yield }
-          </a>
-        HTML
+        tag(:a, yield,
+          :href  => item.url(@resource),
+          :title => item.title(@inject[item.id])
+        )
       end
     end # Formatter
 
