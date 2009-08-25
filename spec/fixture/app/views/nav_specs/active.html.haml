@@ -1,0 +1,18 @@
+:ruby
+  Kin::Nav.setup(:test) do |nav|
+    nav.add(:home, 'Home').url('/myurl')
+
+    # Non-matches.
+    nav.add(:invalid_controller, 'Invalid').active_on('no/*')
+    nav.add(:invalid_specific, 'Specific').active_on('nav_specs/no_specific_active')
+
+    # Matches.
+    nav.add(:generic, 'Generic').active_on('*/*')
+    nav.add(:controller, 'Controller').active_on('nav_specs/*')
+    nav.add(:specific, 'Specific').active_on('nav_specs/specific_active')
+
+    # Non-matching generic - a generic is already defined above.
+    nav.add(:invalid_generic, 'Generic').active_on('*/*')
+  end
+
+= display_navigation(:test)

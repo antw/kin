@@ -14,17 +14,18 @@ module Kin
       #
       # @param [Kin::Nav::Menu] nav
       #   An instance of a Menu to be rendered as HTML.
-      # @param [Symbol] current
-      #   The ID of the menu item which is active.
+      # @param [#controller_name, #action_name] controller
+      #   An object which behaves like a controller.
       # @param [Hash] options
       #   A hash of options for customising the menu. See
       #   Kin::Nav::Helper#display_navigation.
       #
       # @api public
       #
-      def initialize(nav, current, options)
+      def initialize(nav, controller, options)
         @nav = nav
-        @current  = current
+        @current  = nav.active_item(controller)
+
         @resource = options[:resource]
         @inject   = options.fetch(:inject, {})
         @guards   = options.fetch(:guard, {})

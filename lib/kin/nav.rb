@@ -94,6 +94,57 @@ module Kin
       def initialize(name)
         @name  = name.to_sym
         @items = []
+
+        # Used to find the active item on a given page.
+        @matchers = Struct.new(:best, :controller, :generic).new([], [], [])
+      end
+
+      ##
+      # Adds a controller name / action name pair for matching active items.
+      #
+      # @param [String] name
+      #   The name of an controller and action.
+      # @param [Kin::Nav::Item]
+      #   A menu item.
+      #
+      # @return Kin::Nav::ItemMatcher
+      #
+      # @api semipubic
+      #
+      def add_active_match(name, item)
+        name = name.split('/')
+        matcher = ItemMatcher.new(item, name[0..-2].join('/'), name.last)
+
+        if matcher.action?
+          @matchers.best << matcher
+        elsif matcher.controller?
+          @matchers.controller << matcher
+        else
+          @matchers.generic << matcher
+        end
+
+        matcher
+      end
+
+      ##
+      # Returns the active item based on the given controller.
+      #
+      # @param [#controller_name, #action_name] controller
+      #   An object which behaves like a controller.
+      #
+      # @return [Symbol]
+      #
+      # @api semipublic
+      #
+      def active_item(controller)
+        match = lambda { |matcher| matcher.matches?(controller) }
+
+        found =
+          @matchers.best.detect(&match)       ||
+          @matchers.controller.detect(&match) ||
+          @matchers.generic.detect(&match)
+
+        found.item.id if found
       end
     end
 
@@ -104,6 +155,10 @@ module Kin
       attr_reader   :id
       attr_accessor :resource, :guard
       attr_writer   :url, :title
+
+      def inspect
+        "#<Kin::Nav::Item #{id}>"
+      end
 
       ##
       # @param [Symbol] id
@@ -192,5 +247,85 @@ module Kin
       end
 
     end # Item
+
+    ##
+    # Used to match a controller name and action name to an item.
+    #
+    # This is used to find out which item should be considered active for the
+    # given controller and action.
+    #
+    class ItemMatcher
+      attr_reader :item
+
+      ##
+      # Creates a new ItemMatcher instance.
+      #
+      # @param [Kin::Nav::Item] item
+      #   The item to be considered active for which the given controller and
+      #   action pair.
+      # @param [String] controller_name
+      #   The name of the controller.
+      # @param [String] action_name
+      #   The name of the action, or '*' if the item is active for all actions
+      #   on the controller.
+      #
+      # @api private
+      #
+      def initialize(item, controller_name, action_name)
+        # Can't use match an action name with a generic controller.
+        if controller_name == '*' && action_name != '*'
+          # @todo spec
+          raise ArgumentError, "Can't match any controller with a specific " \
+            "action: #{controller_name}/#{action_name}"
+        end
+
+        @item = item
+        @controller_name = controller_name
+        @action_name = action_name
+      end
+
+      ##
+      # Returns if this matcher has a controller specified.
+      #
+      # @return [Boolean]
+      #
+      # @api semipublic
+      #
+      def controller?
+        @controller_name && @controller_name != '*'
+      end
+
+      ##
+      # Returns if this is matcher has an action specified.
+      #
+      # @return [Boolean]
+      #
+      # @api semipublic
+      #
+      def action?
+        @action_name && @action_name != '*'
+      end
+
+      ##
+      # Attempts to match against the given controller.
+      #
+      # @param [#controller_name, #action_name] controller
+      #   An object which behaves like a controller.
+      #
+      # @return [Boolean]
+      #
+      # @api semipublic
+      #
+      def matches?(controller)
+        if not controller?
+          true
+        elsif not action?
+          @controller_name == controller.controller_name
+        else
+          @controller_name == controller.controller_name &&
+            @action_name == controller.action_name
+        end
+      end
+    end # ItemMatcher
   end # Nav
 end # Kin

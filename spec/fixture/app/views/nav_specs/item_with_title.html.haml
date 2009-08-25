@@ -5,4 +5,4 @@
     nav.add(:inject_title, 'Item with %s').title('My item title')
   end
 
-= display_navigation(:test, nil, :inject => { :inject_title => ['content'] })
+= display_navigation(:test, :inject => { :inject_title => ['content'] })

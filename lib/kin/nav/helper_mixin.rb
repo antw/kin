@@ -13,8 +13,6 @@ module Kin
       #
       # @param [Symbol] name
       #   The name of the menu to be displayed.
-      # @param [Symbol] current
-      #   The ID of the active nav item
       # @param [Hash] options
       #   Options to be supplied to the formatter.
       #
@@ -45,9 +43,9 @@ module Kin
       #
       # @api public
       #
-      def display_navigation(name, current, options = {})
+      def display_navigation(name, options = {})
         (options[:formatter] || Merb::Plugins.config[:kin][:nav_formatter]).new(
-          Kin::Nav.get(name), current, options
+          Kin::Nav.get(name), self, options
         ).to_html
       end
     end

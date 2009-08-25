@@ -48,7 +48,7 @@ module Kin
       # @api public
       #
       def add(name, label)
-        ibuilder = ItemBuilder.new(name.to_sym, label)
+        ibuilder = ItemBuilder.new(name.to_sym, label, @nav)
         @item_builders << ibuilder
         ibuilder
       end
@@ -67,11 +67,14 @@ module Kin
       #   A unique name for the Item instance.
       # @param [String] label
       #   Text which will be used on the item when rendered as HTML.
+      # @param [Kin::Nav::Menu]
+      #   The menu instance to which the item belongs.
       #
       # @api private
       #
-      def initialize(name, label)
+      def initialize(name, label, menu)
         @item = Item.new(name, label)
+        @menu = menu
       end
 
       ##
@@ -134,6 +137,31 @@ module Kin
       #
       def guard(guard)
         @item.guard = guard
+        self
+      end
+
+      ##
+      # Sets on which controllers and actions the nav item should be
+      # considered to be the active item.
+      #
+      # @param [Array<String>] pairs
+      #   An array of controller/action names.
+      #
+      # @return [Kin::Nav::ItemBuilder]
+      #   Returns self.
+      #
+      # @example
+      #   # The 'home' tab will be active on any action on the 'home'
+      #   # controller, or the index action of the dashboard controller.
+      #   menu.add(:home, 'Home').active_on('home/*', 'dashboard/index')
+      #
+      # @api public
+      #
+      def active_on(*pairs)
+        pairs.each do |pair|
+          @menu.add_active_match(pair, @item)
+        end
+
         self
       end
     end
