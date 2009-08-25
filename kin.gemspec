@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{kin}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Anthony Williams"]
-  s.date = %q{2009-08-22}
+  s.date = %q{2009-08-25}
   s.description = %q{Components commonly used in Showcase which can be applied to other projects.}
   s.email = %q{anthony@ninecraft.com}
   s.extra_rdoc_files = [
@@ -34,6 +34,9 @@ Gem::Specification.new do |s|
      "lib/kin/masthead.rb",
      "lib/kin/merbtasks.rb",
      "lib/kin/nav.rb",
+     "lib/kin/nav/builder.rb",
+     "lib/kin/nav/formatters.rb",
+     "lib/kin/nav/helper_mixin.rb",
      "lib/kin/tasks/sync_assets.rb",
      "spec/configurable_spec.rb",
      "spec/core_ext/date_spec.rb",
@@ -94,6 +97,7 @@ Gem::Specification.new do |s|
      "spec/fixture/app/views/masthead_specs/with_links.html.haml",
      "spec/fixture/app/views/masthead_specs/with_no_escape.html.haml",
      "spec/fixture/app/views/nav_specs/_guarded.html.haml",
+     "spec/fixture/app/views/nav_specs/active.html.haml",
      "spec/fixture/app/views/nav_specs/content_injection.html.haml",
      "spec/fixture/app/views/nav_specs/escaped_content_injection.html.haml",
      "spec/fixture/app/views/nav_specs/generic_nav.html.haml",
