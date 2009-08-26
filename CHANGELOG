@@ -1,3 +1,13 @@
+== 0.3.1 2009-08-26
+
+* When setting on which controller and actions a nav item can be active, you
+  may use a glob for the action: 'home/{dashboard,accounts,users}'.
+
+== 0.3.0 2009-08-25
+
+* Kin::Nav now figures out which tab is active depending on the current
+  controller and action (see fixture/active.html.haml).
+
 == 0.2.0 2009-08-22
 
 * Renamed gem from Potion to Kin.
