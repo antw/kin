@@ -68,7 +68,7 @@ module Kin
       # @api private
       #
       def trasform_item_to_html(item)
-        html_list_item(item, @current == item.id) do
+        html_list_item(item) do
           html_link(item) { item.label(@inject[item.id]) }
         end
       end
@@ -79,18 +79,19 @@ module Kin
       #
       # @param [Kin::Nav::Item] item
       #   The item to be transformed to HTML.
-      # @param [Boolean] is_active
-      #   A flag indicating if this item is the active item.
       #
       # @return [String]
       #
       # @api private
       #
-      def html_list_item(item, is_active)
-        tag(:li, yield,
-          :id    => "nav_#{item.id}",
-          :class => is_active ? 'active"' : ''
-        )
+      def html_list_item(item)
+        opts =
+          case item.id == @current
+            when true  then { :id => "nav_#{item.id}", :class => 'active' }
+            when false then { :id => "nav_#{item.id}" }
+          end
+
+        tag(:li, yield, opts)
       end
 
       ##
