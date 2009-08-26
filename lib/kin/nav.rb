@@ -281,7 +281,13 @@ module Kin
 
         @item = item
         @controller_name = controller_name
-        @action_name = action_name
+
+        if match = action_name.match(/^\{(.*)\}$/)
+          # The action name is a glob containing multiple actions.
+          @action_name = match[1].split(',')
+        else
+          @action_name = [action_name]
+        end
       end
 
       ##
@@ -303,7 +309,7 @@ module Kin
       # @api semipublic
       #
       def action?
-        @action_name && @action_name != '*'
+        @action_name.any? && @action_name.first != '*'
       end
 
       ##
@@ -323,7 +329,7 @@ module Kin
           @controller_name == controller.controller_name
         else
           @controller_name == controller.controller_name &&
-            @action_name == controller.action_name
+          @action_name.include?(controller.action_name)
         end
       end
     end # ItemMatcher

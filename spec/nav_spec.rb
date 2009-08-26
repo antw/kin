@@ -278,6 +278,7 @@ describe Kin::Nav do
         html.should_not have_selector('#nav_generic.active')
         html.should_not have_selector('#nav_controller.active')
         html.should have_selector('#nav_specific.active')
+        html.should_not have_selector('#nav_glob.active')
         html.should_not have_selector('#nav_invalid_generic.active')
         html.should_not have_selector('#nav_invalid_controller.active')
         html.should_not have_selector('#nav_invalid_specific.active')
@@ -292,6 +293,7 @@ describe Kin::Nav do
         html.should_not have_selector('#nav_generic.active')
         html.should have_selector('#nav_controller.active')
         html.should_not have_selector('#nav_specific.active')
+        html.should_not have_selector('#nav_glob.active')
         html.should_not have_selector('#nav_invalid_generic.active')
         html.should_not have_selector('#nav_invalid_controller.active')
         html.should_not have_selector('#nav_invalid_specific.active')
@@ -307,6 +309,22 @@ describe Kin::Nav do
         html.should have_selector('#nav_generic.active')
         html.should_not have_selector('#nav_controller.active')
         html.should_not have_selector('#nav_specific.active')
+        html.should_not have_selector('#nav_glob.active')
+        html.should_not have_selector('#nav_invalid_generic.active')
+        html.should_not have_selector('#nav_invalid_controller.active')
+        html.should_not have_selector('#nav_invalid_specific.active')
+      end
+
+      it 'should make the correct item active with a matching glob action' do
+        @c.stub!(:action_name).and_return('glob_active')
+
+        html = @c.render(:active)
+
+        html.should_not have_selector('#nav_home.active')
+        html.should_not have_selector('#nav_generic.active')
+        html.should_not have_selector('#nav_controller.active')
+        html.should_not have_selector('#nav_specific.active')
+        html.should have_selector('#nav_glob.active')
         html.should_not have_selector('#nav_invalid_generic.active')
         html.should_not have_selector('#nav_invalid_controller.active')
         html.should_not have_selector('#nav_invalid_specific.active')

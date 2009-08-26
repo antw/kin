@@ -10,6 +10,7 @@
     nav.add(:generic, 'Generic').active_on('*/*')
     nav.add(:controller, 'Controller').active_on('nav_specs/*')
     nav.add(:specific, 'Specific').active_on('nav_specs/specific_active')
+    nav.add(:glob, 'Glob').active_on('nav_specs/{glob_active,another_active}')
 
     # Non-matching generic - a generic is already defined above.
     nav.add(:invalid_generic, 'Generic').active_on('*/*')
