@@ -22,7 +22,7 @@ begin
               Dir.glob("{lib,spec}/**/*") - %w(spec/merb_test.log)
   end
 rescue LoadError
-  puts 'Jeweler not available. Install it with: sudo gem install ' +
+  puts 'Jeweler not available. Install it with: gem install ' +
        'technicalpickles-jeweler -s http://gems.github.com'
 end
 
@@ -48,4 +48,17 @@ Spec::Rake::SpecTask.new('spec:rcov') do |t|
   t.spec_opts = ['-c -f s']
   t.rcov = true
   t.rcov_opts = ['--exclude', 'spec']
+end
+
+##############################################################################
+# YARD Documentation
+##############################################################################
+
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new do |t|
+    t.files = %w( CHANGELOG LICENSE lib/**/*.rb )
+  end
+rescue LoadError
+  puts 'Yardoc not available. Install it with: gem install yardoc'
 end

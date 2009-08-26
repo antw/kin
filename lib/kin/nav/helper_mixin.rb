@@ -20,7 +20,7 @@ module Kin
       #   Overrides the default formatter.
       # @option options [Hash] :inject
       #   Injects content into a nav item.
-      # @options option [Hash] :guard
+      # @option option [Hash] :guard
       #   A hash of guard conditions.
       #
       # @return [String]
