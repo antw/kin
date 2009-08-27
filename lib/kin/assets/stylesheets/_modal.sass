@@ -1,0 +1,67 @@
+.modal_mask
+  :background #000
+  :height 100%
+  :left 0
+  :position fixed
+  :opacity 0.7
+  :top 0
+  :width 100%
+  :z-index 100
+
+.modal_shadow
+  :background url(/images/ui-page-shadow-compact.png) top center no-repeat
+  :left 50%
+  :margin 0 0 0 -325px
+  :min-height 306px
+  :position fixed
+  :padding 0 75px
+  :top 100px
+  :z-index 101
+  :width = 500px + 22px + 22px
+
+.dialog
+  :z-index 102
+  :width = 500px + 22px + 22px
+
+  .top
+    :background url(/images/ui-chrome-compact.png) 0 -36px no-repeat
+    :height 36px
+    :padding 22px 22px 0 22px
+    :position relative
+    .title
+      :background url(/images/ui-chrome-compact.png) 0 0 no-repeat
+      :font-weight bold
+      :height = 36px - 10px
+      :padding 10px 25px 0
+      :text-shadow 0 1px 0 #eee
+      .note
+        :color #444
+      .icon
+        :padding 1px 0 0 20px
+        &.server
+          +event-icon("server-shadow")
+        &.event
+          +main-icon("event-shadow")
+    .close
+      :background url(/images/ui-modal-cross.png) 21px 10px no-repeat
+      :height 32px
+      :position absolute
+      :right 22px
+      :top 24px
+      :width 57px
+      :z-index 9999
+      &:hover
+        :background-position 21px -40px
+      &:active
+        :background-position 21px -90px
+
+  .content
+    :background url(/images/ui-chrome-compact.png) -544px 0 repeat-y
+    :padding 25px 47px 21px
+    :width 450px
+
+  .footer
+    :background url(/images/ui-chrome-compact.png) 0 -103px no-repeat
+    :height 27px
+    :padding 0 47px
+    :width 450px
