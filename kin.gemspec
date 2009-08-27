@@ -5,27 +5,26 @@
 
 Gem::Specification.new do |s|
   s.name = %q{kin}
-  s.version = "0.3.1"
+  s.version = "0.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Anthony Williams"]
-  s.date = %q{2009-08-26}
+  s.date = %q{2009-08-27}
   s.description = %q{Components commonly used in Showcase which can be applied to other projects.}
   s.email = %q{anthony@ninecraft.com}
   s.extra_rdoc_files = [
     "CHANGELOG",
-     "LICENSE",
-     "README"
+     "LICENSE"
   ]
   s.files = [
     "CHANGELOG",
      "LICENSE",
-     "README",
      "Rakefile",
      "VERSION.yml",
      "lib/kin.rb",
      "lib/kin/assets/javascripts/kin.js",
      "lib/kin/assets/stylesheets/_forms.sass",
+     "lib/kin/assets/stylesheets/_modal.sass",
      "lib/kin/configurable.rb",
      "lib/kin/core_ext/date.rb",
      "lib/kin/core_ext/string.rb",
