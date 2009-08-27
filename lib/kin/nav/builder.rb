@@ -42,6 +42,7 @@ module Kin
       #   Text which will be used on the item when rendered as HTML.
       #
       # @return [Kin::Nav::ItemBuilder]
+      # @yield  [Kin::Nav::ItemBuilder] The builder instance.
       #
       # @see Kin::Nav.build
       #
@@ -50,6 +51,7 @@ module Kin
       def add(name, label)
         ibuilder = ItemBuilder.new(name.to_sym, label, @nav)
         @item_builders << ibuilder
+        yield ibuilder if block_given?
         ibuilder
       end
     end

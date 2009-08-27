@@ -70,6 +70,28 @@ describe Kin::Nav do
     end
   end
 
+  describe '(block syntax integration)' do
+    before(:all) do
+      @nav = Kin::Nav.setup(:test) do |nav|
+        nav.add(:home, 'Home') do |item|
+          item.title 'Title'
+          item.url   '/url'
+        end
+      end
+    end
+
+    it 'should have the correct number of nav items' do
+      @nav.items.should have(1).item
+    end
+
+    it 'should set the item attributes correctly' do
+      @nav.items[0].id.should == :home
+      @nav.items[0].label.should == 'Home'
+      @nav.items[0].title.should == 'Title'
+      @nav.items[0].url.should == '/url'
+    end
+  end
+
   # -------
   # to_html
 
