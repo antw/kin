@@ -1,0 +1,7 @@
+:ruby
+  Kin::Nav.setup(:test) do |nav|
+    nav.add(:one, 'One')
+    nav.add(:two, 'Two')
+  end
+
+= display_navigation(:test, :formatter => Kin::Nav::Formatters::Subnav)

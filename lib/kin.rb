@@ -17,7 +17,9 @@ if defined?(Merb::Plugins)
 
   # Default nav formatter. Can be overridden in an after_app_loads block, or
   # on a case-by-case basis in +display_navigation+.
-  Merb::Plugins.config[:kin] = { :nav_formatter => Kin::Nav::BasicFormatter }
+  Merb::Plugins.config[:kin] = {
+    :nav_formatter => Kin::Nav::Formatters::Basic
+  }
 
   Merb::BootLoader.after_app_loads do
     # Add default time formats.

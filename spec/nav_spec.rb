@@ -145,6 +145,38 @@ describe Kin::Nav do
       end
     end
 
+    # ------------------
+    # HasRight formatter
+
+    describe 'with the HasRight formatter' do
+      before(:each) do
+        @html = @c.render(:has_right_formatter)
+      end
+
+      it 'should apply a custom style the right-aligned items' do
+        %w( right_one right_two ).each do |name|
+          @html.should have_selector("#nav_#{name} span.right_border")
+        end
+      end
+
+      it 'should use the default style for items not right-aligned' do
+        @html.should_not have_selector('#nav_left span.right_border')
+      end
+    end
+
+    # ----------------
+    # Subnav formatter
+
+    describe 'with the Subnav formatter' do
+      it 'should apply a custom style to all items' do
+        html = @c.render(:subnav_formatter)
+
+        %w( one two ).each do |name|
+          html.should have_selector("#nav_#{name} span.pill")
+        end
+      end
+    end
+
     # ------
     # titles
 
