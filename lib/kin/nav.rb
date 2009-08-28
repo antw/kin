@@ -125,7 +125,7 @@ module Kin
       #
       # @return Kin::Nav::ItemMatcher
       #
-      # @api semipubic
+      # @api semipublic
       #
       def add_active_match(name, item)
         name = name.split('/')
@@ -244,12 +244,16 @@ module Kin
       # Returns true if this item expects a resource in order to generate a
       # URL.
       #
+      # @api private
+      #
       def expects_resource?
         not @resource.nil?
       end
 
       ##
       # Takes a resource and generates a URL.
+      #
+      # @api private
       #
       def resource_url(given)
         raise MissingResource, "Nav item #{id.inspect} expected a " \
@@ -271,6 +275,11 @@ module Kin
     # given controller and action.
     #
     class ItemMatcher
+      ##
+      # Returns the item which this matcher is associated.
+      #
+      # @api semipublic
+      #
       attr_reader :item
 
       ##
