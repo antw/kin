@@ -44,7 +44,7 @@ module Kin
       # @api public
       #
       def display_navigation(name, options = {})
-        (options[:formatter] || Merb::Plugins.config[:kin][:nav_formatter]).new(
+        (options[:formatter] || Kin::Nav.get(name).formatter).new(
           Kin::Nav.get(name), self, options
         ).to_html
       end

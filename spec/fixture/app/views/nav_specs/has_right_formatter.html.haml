@@ -1,9 +1,9 @@
 :ruby
-  Kin::Nav.setup(:test) do |nav|
+  Kin::Nav.setup(:test, Kin::Nav::Formatters::HasRight(:right_one, :right_two)) do |nav|
     # Items with titles.
     nav.add(:left, 'Left')
     nav.add(:right_one, 'Right one')
     nav.add(:right_two, 'Right one')
   end
 
-= display_navigation(:test, :formatter => Kin::Nav::Formatters::HasRight(:right_one, :right_two))
+= display_navigation(:test)

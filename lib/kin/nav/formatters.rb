@@ -148,7 +148,7 @@ module Kin
             HTML
           end
         end # transform_item_to_html
-      end
+      end # HasRight
 
       ##
       # Creates a HasRight subclass.

@@ -19,6 +19,8 @@ module Kin
     #
     # @param [Symbol] name
     #   A name for this menu.
+    # @param [Kin::Nav::Formatters::Basic] formatter
+    #   A custom formatter to use when rendering the menu as HTML.
     # @param [Block] blk
     #   A block for setting up the menu.
     #
@@ -27,8 +29,8 @@ module Kin
     #
     # @api public
     #
-    def self.setup(name = :default, &blk)
-      menu = Builder.new(name).build(&blk)
+    def self.setup(name = :default, formatter = nil, &blk)
+      menu = Builder.new(name, formatter).build(&blk)
       menu.freeze
       menu.items.freeze
       menu.items.each { |i| i.freeze }
@@ -88,15 +90,29 @@ module Kin
       #
       # @param [Symbol] name
       #   A name for this nav.
+      # @param [Kin::Nav::Formatters::Basic]
+      #   A formatter to be used when rendering the menu.
       #
       # @api private
       #
-      def initialize(name)
+      def initialize(name, formatter = nil)
         @name  = name.to_sym
+        @formatter = formatter
         @items = []
 
         # Used to find the active item on a given page.
         @matchers = Struct.new(:best, :controller, :generic).new([], [], [])
+      end
+
+      ##
+      # Returns the default formatter to be used when rendering this menu.
+      #
+      # @return [Kin::Nav::Formatters::Basic]
+      #
+      # @api public
+      #
+      def formatter
+        @formatter || Merb::Plugins.config[:kin][:nav_formatter]
       end
 
       ##

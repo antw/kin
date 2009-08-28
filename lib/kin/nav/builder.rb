@@ -10,11 +10,13 @@ module Kin
       #
       # @param [Symbol] name
       #   A unique name for the Menu instance.
+      # @param [Kin::Nav::Formatters::Basic] formatter
+      #   A custom formatter to use when rendering the menu as HTML.
       #
       # @api private
       #
-      def initialize(name)
-        @nav = Menu.new(name)
+      def initialize(name, formatter = nil)
+        @nav = Menu.new(name, formatter)
         @item_builders = []
       end
 
