@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{kin}
-  s.version = "0.3.2"
+  s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Anthony Williams"]
-  s.date = %q{2009-08-27}
+  s.date = %q{2009-08-28}
   s.description = %q{Components commonly used in Showcase which can be applied to other projects.}
   s.email = %q{anthony@ninecraft.com}
   s.extra_rdoc_files = [
@@ -103,12 +103,14 @@ Gem::Specification.new do |s|
      "spec/fixture/app/views/nav_specs/guard_with_all_params.html.haml",
      "spec/fixture/app/views/nav_specs/guard_with_single_param.html.haml",
      "spec/fixture/app/views/nav_specs/guard_without_param.html.haml",
+     "spec/fixture/app/views/nav_specs/has_right_formatter.html.haml",
      "spec/fixture/app/views/nav_specs/item_with_title.html.haml",
      "spec/fixture/app/views/nav_specs/item_without_title.html.haml",
      "spec/fixture/app/views/nav_specs/multiple_injection.html.haml",
      "spec/fixture/app/views/nav_specs/resource_url.html.haml",
      "spec/fixture/app/views/nav_specs/resource_url_without_resource.html.haml",
      "spec/fixture/app/views/nav_specs/show_resource_url.html.haml",
+     "spec/fixture/app/views/nav_specs/subnav_formatter.html.haml",
      "spec/fixture/app/views/nav_specs/with_custom_formatter.html.haml",
      "spec/fixture/config/environments/development.rb",
      "spec/fixture/config/environments/production.rb",
