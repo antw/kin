@@ -29,8 +29,7 @@ module Kin
         :right_subtitle => 'subtitle'.freeze
       }.freeze
 
-      attr_accessor :no_border
-      attr_reader   :options
+      attr_reader :options
 
       def initialize
         @title, @right_title = nil, nil
@@ -116,7 +115,7 @@ module Kin
         end
 
         <<-HTML
-          <div id="masthead"#{no_border ? ' class="no_border"' : ''}>
+          <div id="masthead">
             <div class="details">
               #{formatted_title}
               #{formatted_subtitle}
@@ -205,7 +204,6 @@ module Kin
       #     - subtitle "This set contains #{@set.contents}"
       #
       def masthead(options = {}, &blk)
-        masthead_builder.no_border = options.fetch(:no_border, false)
         masthead_builder.build(&blk)
       end
 

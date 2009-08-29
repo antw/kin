@@ -98,7 +98,7 @@ describe Kin::Masthead::Builder do
     it 'should render an empty right title when no right title is set, but ' +
        'a right subtitle is set' do
       @c.render(:right_subtitle).should have_selector('.extra .main') do |main|
-        main.to_s.should =~ /&nbsp;/
+        main.to_xhtml.should include('&#xA0;') # Unicode non-breaking space.
       end
     end
 
@@ -128,16 +128,6 @@ describe Kin::Masthead::Builder do
 
     it 'should include a right subtitle if a right subtitle is set' do
       @c.render(:right_subtitle).should have_selector('.extra .subtitle')
-    end
-
-    # Border.
-
-    it 'should not have a "no_border" class by default' do
-      @c.render(:border).should_not have_selector('.no_border')
-    end
-
-    it 'should have a "no_border" class when no_border = true' do
-      @c.render(:no_border).should have_selector('.no_border')
     end
 
     # Links.
@@ -201,28 +191,4 @@ describe Kin::Masthead::Builder do
     end
   end
 
-end
-
-# Masthead::Helper Specs =====================================================
-
-describe 'Masthead helper mixin' do
-  include Kin::Masthead::Helper
-
-  describe '#masthead' do
-    it 'should pass along the :no_border option' do
-      masthead(:no_border => true) { |_| }
-      masthead_builder.no_border.should be_true
-    end
-
-    it 'should pass the block along to #build' do
-      masthead { |m| m.title('Title') }
-      masthead_builder.title.should == 'Title'
-    end
-  end
-
-  describe '#masthead_builder' do
-    it 'should return the same instance each time' do
-      masthead_builder.object_id.should == masthead_builder.object_id
-    end
-  end
 end
