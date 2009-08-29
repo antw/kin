@@ -1,50 +1,8 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
 
-# Masthead::Builder Specs ======================================================
-
-describe 'masthead builder setter', :shared => true do
-  it 'should set the attribute if a value is given' do
-    @builder.send(@method, 'my_value').should == 'my_value'
-  end
-
-  it 'should not change the attribute value if nil is given' do
-    @builder.send(@method, 'my_value')
-    @builder.send(@method).should == 'my_value'
-    @builder.send(@method, nil).should == 'my_value'
-  end
-
-  it 'should set the extra options' do
-    @builder.send(@method, 'my_value', { :link => '/' })
-    @builder.options[@method].should == { :link => '/' }
-  end
-end
-
 describe Kin::Masthead::Builder do
   before(:each) do
     @builder = Kin::Masthead::Builder.new
-  end
-
-  # -------
-  # Setters
-
-  describe '#title' do
-    before(:each) { @method = :title }
-    it_should_behave_like 'masthead builder setter'
-  end
-
-  describe '#subtitle' do
-    before(:each) { @method = :subtitle }
-    it_should_behave_like 'masthead builder setter'
-  end
-
-  describe '#right_title' do
-    before(:each) { @method = :right_title }
-    it_should_behave_like 'masthead builder setter'
-  end
-
-  describe '#right_subtitle' do
-    before(:each) { @method = :right_subtitle }
-    it_should_behave_like 'masthead builder setter'
   end
 
   # -----

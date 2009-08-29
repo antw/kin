@@ -29,12 +29,31 @@ module Kin
         :right_subtitle => 'subtitle'.freeze
       }.freeze
 
-      attr_reader :options
-
+      ##
+      # Creates a new masthead builder.
+      #
+      # @api semipublic
+      #
       def initialize
-        @title, @right_title = nil, nil
-        @subtitle, @right_subtitle = nil, nil
-        @options = {}
+        @title = @right_title = @subtitle = @right_subtitle = nil
+        @options = Hash.new { |hash, key| hash[key] = {} }
+      end
+
+      ##
+      # Builds a masthead.
+      #
+      # Yields the builder instance providing a DSL for setting up the
+      # masthead as desired.
+      #
+      # @return [Kin::Nav::Builder]
+      #
+      # @yield [Kin::Nav::Builder]
+      #
+      # @api semipublic
+      #
+      def build
+        yield self
+        self
       end
 
       ##
@@ -44,6 +63,8 @@ module Kin
       # @param  [String] value   The new title.
       # @param  [Hash]   options A hash containing extraoptions.
       # @return [String]         The masthead title.
+      #
+      # @api public
       #
       def title(value = nil, options = nil)
       end
@@ -56,6 +77,8 @@ module Kin
       # @param  [Hash]   options A hash containing extraoptions.
       # @return [String]         The masthead right title.
       #
+      # @api public
+      #
       def right_title(value = nil, options = nil)
       end
 
@@ -67,6 +90,8 @@ module Kin
       # @param  [Hash]   options A hash containing extraoptions.
       # @return [String]         The masthead subtitle.
       #
+      # @api public
+      #
       def subtitle(value = nil, options = nil)
       end
 
@@ -77,6 +102,8 @@ module Kin
       # @param  [String] value   The new right subtitle.
       # @param  [Hash]   options A hash containing extraoptions.
       # @return [String]         The masthead right subtitle.
+      #
+      # @api public
       #
       def right_subtitle(value = nil, options = nil)
       end
@@ -100,88 +127,113 @@ module Kin
       end
 
       ##
-      # Returns the masthead as HTML.
-      # @return [String] The masthead with all the various titles.
+      # Returns the HTML representation of the masthead.
+      #
+      # @return [String]
+      #   The masthead with all the various titles.
+      #
+      # @api public
       #
       def to_html
-        formatted_title = formatted(:title, :h1)
-        formatted_subtitle = formatted(:subtitle) if @subtitle
-
-        extras = if has_extras?
-          '<div class="extra">%s %s</div>' % [
-            formatted(:right_title) || '<span class="main">&nbsp;</span>',
-            @right_subtitle ? formatted(:right_subtitle) : ''
-          ]
-        end
-
         <<-HTML
           <div id="masthead">
             <div class="details">
-              #{formatted_title}
-              #{formatted_subtitle}
+              #{ formatted(:title, :h1) }
+              #{ formatted(:subtitle) }
             </div>
 
-            #{extras}
+            #{ extras_as_html }
           </div>
         HTML
       end
 
-      ##
-      # Builds a masthead.
-      #
-      def build
-        yield self
-        self
-      end
-
-      #######
-      private
-      #######
+      private # ==============================================================
 
       ##
-      # Returns whether this masthead builder has an "extras".
+      # Returns <div.extra> containing the right-hand stuff.
       #
-      # Extras are defined as being a right-hand title or right-hand subtitle.
-      # Generally, if the builder has no extras, the .extras div will not be
-      # rendered by #to_html
+      # @return [String, nil]
+      #   Returns nil if no <div.extra> is needed.
       #
-      # @return [TrueClass|FalseClass]
+      # @api private
       #
-      def has_extras?
-        not @right_title.nil? or not @right_subtitle.nil?
+      def extras_as_html
+        unless @right_title.nil? && @right_subtitle.nil?
+          <<-HTML
+            <div class="extra">
+              #{ formatted(:right_title) }
+              #{ formatted(:right_subtitle) }
+            </div>
+          HTML
+        end
       end
 
       ##
-      # Returns formatted text for a given field. Wraps the text in a link if
-      # one is required, otherwise the text is returned on it's own.
+      # Returns the HTML element containing the value for the field specified
+      # by +field+.
+      #
+      # @param [Symbol] field
+      #   The name of the field whose value you wish to retrieve.
+      # @param [Symbol] wrap_in
+      #   The HTML element which should wrap the field value.
+      #
+      # @return [String, nil]
+      #   nil will be returned if no the field should not be displayed.
+      #
+      # @api semipublic
       #
       def formatted(field, wrap_in = :span)
-        if instance_variable_get(:"@#{field}").blank?
-          return nil
-        else
-          value = instance_variable_get(:"@#{field}").to_s
-        end
+        value = value_for(field)
+        options = @options[field]
 
-        options = @options[field] || {}
-        link    = options.delete(:link)
+        if value.blank?
+          # If the field is blank, we want to return _unless_ the field is the
+          # right subtitle, and a right title is set (in which case a title
+          # element is needed to push the subtitle down).
+          if field != :right_title || value_for(:right_subtitle).blank?
+            return nil
+          else
+            value = '&nbsp;'
+            options[:no_escape] = true
+          end
+        end
 
         # Escape required?
         unless options.delete(:no_escape)
-          value = Merb::Parse.escape_xml(value.to_s)
+          value = Merb::Parse.escape_xml(value)
         end
 
         # Link required?
-        if link
-          value = '<a href="%s" title="%s">%s</a>' % [link, value, value]
+        if options.has_key?(:link)
+          value = %[<a href="#{options.delete(:link)}"] +
+                    %[ title="#{value}">#{value}</a>]
         end
 
+        # Set the CSS class.
         if options[:class]
-          options[:class] += ' %s' % CSS_CLASSES[field]
-        elsif field != :title
+          options[:class] = [options[:class], CSS_CLASSES[field]].join(' ')
+        elsif CSS_CLASSES[field] != ''
           options[:class] = CSS_CLASSES[field]
         end
 
         tag(wrap_in, value, options)
+      end
+
+      ##
+      # Retrieves a value for the specified +field+.
+      #
+      # @param [Symbol] field
+      #   The name of the field whose value you wish to retrieve.
+      #
+      # @return [String, nil]
+      #   Returns nil if nothing is set, or a string version of whatever the
+      #   field is set to.
+      #
+      # @api private
+      #
+      def value_for(field)
+        value = instance_variable_get(:"@#{field}")
+        value.nil? ? nil : value.to_s
       end
     end
 
@@ -198,10 +250,12 @@ module Kin
       # Note that the block is evaluated within the MastheadBuilder instance
       # itself.
       #
-      # @example [In a template]
-      #   - masthead(:no_border => true) do
+      # @example In a template
+      #   - masthead do
       #     - title @set
       #     - subtitle "This set contains #{@set.contents}"
+      #
+      # @api public
       #
       def masthead(options = {}, &blk)
         masthead_builder.build(&blk)
@@ -210,8 +264,9 @@ module Kin
       ##
       # Returns the MastheadBuilder instance for the current request.
       #
-      # @api private
       # @return [Kin::MastheadBuilder]
+      #
+      # @api public
       #
       def masthead_builder
         @_masthead_builder ||= Kin::Masthead::Builder.new
