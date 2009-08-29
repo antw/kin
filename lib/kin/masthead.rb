@@ -22,7 +22,7 @@ module Kin
     class Builder
       include Merb::Helpers::Tag
 
-      DEFAULT_CLASSES = {
+      CSS_CLASSES = {
         :title          => ''.freeze,
         :subtitle       => 'subtitle'.freeze,
         :right_title    => 'main'.freeze,
@@ -176,9 +176,9 @@ module Kin
         end
 
         if options[:class]
-          options[:class] += ' %s' % DEFAULT_CLASSES[field]
+          options[:class] += ' %s' % CSS_CLASSES[field]
         elsif field != :title
-          options[:class] = DEFAULT_CLASSES[field]
+          options[:class] = CSS_CLASSES[field]
         end
 
         tag(wrap_in, value, options)
