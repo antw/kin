@@ -14,6 +14,7 @@ if defined?(Merb::Plugins)
   require File.join(kin, 'nav')
 
   Merb::Plugins.add_rakefiles(File.join(kin, 'tasks', 'sync_assets'))
+  Merb::Plugins.add_rakefiles(File.join(kin, 'tasks', 'sprites'))
 
   # Default nav formatter. Can be overridden in an after_app_loads block, or
   # on a case-by-case basis in +display_navigation+.

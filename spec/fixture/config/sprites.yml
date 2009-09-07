@@ -1,0 +1,9 @@
+---
+  general:
+    - one
+    - two
+    - three
+
+  more:
+    - two
+    - three

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Anthony Williams"]
-  s.date = %q{2009-08-28}
+  s.date = %q{2009-09-06}
   s.description = %q{Components commonly used in Showcase which can be applied to other projects.}
   s.email = %q{anthony@ninecraft.com}
   s.extra_rdoc_files = [
@@ -31,11 +31,15 @@ Gem::Specification.new do |s|
      "lib/kin/core_ext/time.rb",
      "lib/kin/form_builder.rb",
      "lib/kin/masthead.rb",
-     "lib/kin/merbtasks.rb",
      "lib/kin/nav.rb",
      "lib/kin/nav/builder.rb",
      "lib/kin/nav/formatters.rb",
      "lib/kin/nav/helper_mixin.rb",
+     "lib/kin/sprites.rb",
+     "lib/kin/sprites/image_generator.rb",
+     "lib/kin/sprites/rake_runner.rb",
+     "lib/kin/sprites/sass_generator.rb",
+     "lib/kin/tasks/sprites.rb",
      "lib/kin/tasks/sync_assets.rb",
      "spec/configurable_spec.rb",
      "spec/core_ext/date_spec.rb",
@@ -86,7 +90,6 @@ Gem::Specification.new do |s|
      "spec/fixture/app/views/masthead_specs/all.html.haml",
      "spec/fixture/app/views/masthead_specs/border.html.haml",
      "spec/fixture/app/views/masthead_specs/escaping.html.haml",
-     "spec/fixture/app/views/masthead_specs/no_border.html.haml",
      "spec/fixture/app/views/masthead_specs/no_extras.html.haml",
      "spec/fixture/app/views/masthead_specs/no_subtitles.html.haml",
      "spec/fixture/app/views/masthead_specs/right_subtitle.html.haml",
@@ -120,12 +123,18 @@ Gem::Specification.new do |s|
      "spec/fixture/config/init.rb",
      "spec/fixture/config/rack.rb",
      "spec/fixture/config/router.rb",
+     "spec/fixture/config/sprites.different.yml",
+     "spec/fixture/config/sprites.yml",
      "spec/fixture/public/images/merb.jpg",
+     "spec/fixture/public/images/sprites/src/one.png",
+     "spec/fixture/public/images/sprites/src/three.png",
+     "spec/fixture/public/images/sprites/src/two.png",
      "spec/fixture/public/stylesheets/master.css",
      "spec/form_builder_spec.rb",
      "spec/masthead_spec.rb",
      "spec/nav_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "spec/sprites_spec.rb"
   ]
   s.has_rdoc = false
   s.rdoc_options = ["--charset=UTF-8"]
@@ -156,7 +165,8 @@ Gem::Specification.new do |s|
      "spec/form_builder_spec.rb",
      "spec/masthead_spec.rb",
      "spec/nav_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "spec/sprites_spec.rb"
   ]
 
   if s.respond_to? :specification_version then

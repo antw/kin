@@ -1,0 +1,11 @@
+---
+  # Used in the RakeRunner specs to test
+  # a sprite definition being changed.
+
+  general:
+    - one
+    - three
+
+  more:
+    - two
+    - three

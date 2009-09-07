@@ -19,6 +19,37 @@ Spec::Runner.configure do |config|
   config.include(Merb::Test::ViewHelper)
   config.include(Merb::Test::RouteHelper)
   config.include(Merb::Test::ControllerHelper)
+  config.include(Module.new do
+    ##
+    # Returns a path to the fixture directory. Any additional string
+    # parameters will be joined with the path.
+    #
+    def fixture_path(*dirs)
+      File.join(File.dirname(__FILE__), 'fixture', *dirs)
+    end
+
+    ##
+    # Returns a path to the tmp/spec folder. Any additional string
+    # parameters will be joined with the path.
+    #
+    def tmp_path(*dirs)
+      File.join(File.dirname(__FILE__), '..', 'tmp', 'spec', *dirs)
+    end
+
+    ##
+    # Does exactly what it says on the tin.
+    #
+    def capture_stdout
+      orig, $stdout = $stdout, StringIO.new
+
+      begin
+        yield
+        return $stdout.string
+      ensure
+        $stdout = orig
+      end
+    end
+  end)
 end
 
 ##
