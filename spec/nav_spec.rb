@@ -106,14 +106,6 @@ describe Kin::Nav do
       html.should have_selector('#nav_products')
     end
 
-    it 'should set the correct item as active' do
-      pending do
-        html = @c.render(:generic_nav)
-        html.should have_selector('#nav_home.active')
-        html.should_not have_selector('#nav_products.active')
-      end
-    end
-
     it 'should include the item label' do
       html = @c.render(:generic_nav)
       html.should have_selector('#nav_home a:contains("Home")')
