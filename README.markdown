@@ -219,7 +219,7 @@ Running `rake kin:sprites` would create two sprites in the sprites/ directory:
 main.png (which contains src/guest.png, src/set.png, and src/timeline.png),
 and set.png (containing src/set-edit.png and src/set-icon.png).
 
-![main.png](docs/sprite-example.png "main.png")
+![main.png](http://github.com/antw/kin/raw/b49504d291527e7700403fe8cfae7403f4a40d58/docs/sprite-example.png "main.png")
 
 ### SASS partial
 
