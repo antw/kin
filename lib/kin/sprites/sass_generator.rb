@@ -62,7 +62,7 @@ module Kin
         else_modifier = is_first ? '' : 'else '
 
         %[  @#{else_modifier}if !icon == "#{icon}"\n] +
-        %[    !pos = -#{@set.location_of(icon)}px]
+        %[    !pos = !pos + -#{@set.location_of(icon)}px]
       end
     end # SassGenerator
   end # Sprites
