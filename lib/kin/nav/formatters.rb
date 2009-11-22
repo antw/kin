@@ -113,8 +113,8 @@ module Kin
       end # Basic
 
       ##
-      # A formatter used when a navigation menu may has items which should
-      # appear on the right of the UI. Right-floated items are styled slightly
+      # A formatter used when a navigation menu has items which should appear
+      # on the right of the UI. Right-floated items are styled slightly
       # differently.
       #
       class HasRight < Basic
