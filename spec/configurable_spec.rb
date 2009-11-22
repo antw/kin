@@ -12,17 +12,19 @@ describe Kin::Configurable, 'when mixed in to a module' do
   it 'should respond to #configure' do
     @configurable.should respond_to(:configure)
   end
-  
+
   it 'should set attribute values' do
     @configurable.configure do |c|
       c.hello = 'world'
       c.array = ['yep']
-      c.another.item = 'value'
     end
-    
+
     @configurable.config.hello.should == 'world'
     @configurable.config.array.should == ['yep']
-    @configurable.config.another.item.should == 'value'
+  end
+
+  it 'should raise NoMethodError when accessing an undefined setting' do
+    lambda { @configurable.invalid }.should raise_error(NoMethodError)
   end
 
   # ------

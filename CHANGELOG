@@ -1,3 +1,8 @@
+== 0.4.2 2009-11-22
+
+* Remove dependency on Configatron. Also removes the ability to namespace
+  config values (e.g. config.auth.key should become config.auth_key).
+
 == 0.3.3 2009-08-28
 
 * Added Subnav and HasRight menu formatters.

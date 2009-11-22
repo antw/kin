@@ -286,8 +286,7 @@ application configuration:
       extend Kin::Configurable
     end
 
-Kin::Configurable is a wrapper around the Configatron gem, which allows you to
-assign configuration values as deeply as you wish:
+Kin::Configurable provides an easy means of setting configuration.
 
     MyApplication.configure do |c|
       c.auth.site_key = "a8ecf9ac57d287e41"
