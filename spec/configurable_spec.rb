@@ -12,23 +12,17 @@ describe Kin::Configurable, 'when mixed in to a module' do
   it 'should respond to #configure' do
     @configurable.should respond_to(:configure)
   end
-
-  describe 'and configuring' do
-    it 'should yield the configatron instance' do
-      @configurable.configure do |c|
-        c.should be_kind_of(Configatron::Store)
-      end
+  
+  it 'should set attribute values' do
+    @configurable.configure do |c|
+      c.hello = 'world'
+      c.array = ['yep']
+      c.another.item = 'value'
     end
-
-    it 'should allow the setting of new attributes' do
-      @configurable.configure do |c|
-        c.hello = 'world'
-        c.another.item = 'value'
-      end
-
-      @configurable.config.hello.should == 'world'
-      @configurable.config.another.item.should == 'value'
-    end
+    
+    @configurable.config.hello.should == 'world'
+    @configurable.config.array.should == ['yep']
+    @configurable.config.another.item.should == 'value'
   end
 
   # ------
@@ -36,12 +30,6 @@ describe Kin::Configurable, 'when mixed in to a module' do
 
   it 'should respond to #config' do
     @configurable.should respond_to(:config)
-  end
-
-  describe 'and fetching the configuration' do
-    it 'should yield a configatron instance' do
-      @configurable.config.should be_kind_of(Configatron::Store)
-    end
   end
 
 end
