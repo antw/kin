@@ -1,3 +1,8 @@
+== 0.4.3 2009-12-12
+
+* Allow the _sprites.sass partial to be saved at a custom location as defined
+  in Merb::Plugins.config[:sass][:template_location].
+
 == 0.4.2 2009-11-22
 
 * Remove dependency on Configatron. Also removes the ability to namespace
