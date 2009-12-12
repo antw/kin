@@ -24,10 +24,13 @@ namespace :kin do
     require 'kin/sprites'
     require 'kin/sprites/rake_runner'
 
+    sass_dir = Merb::Plugins.config[:sass][:template_location] ||
+       File.join(Merb.dir_for(:stylesheet), 'sass')
+
     Kin::Sprites::RakeRunner.new(
       File.join(Merb.dir_for(:config), 'sprites.yml'),
       File.join(Merb.dir_for(:image), 'sprites'),
-      File.join(Merb.dir_for(:stylesheet), 'sass', '_sprites.sass')
+      File.join(sass_dir, '_sprites.sass')
     ).generate!(force)
   end
 
